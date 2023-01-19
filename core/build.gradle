@@ -1,0 +1,44 @@
+plugins {
+    id 'java'
+    id 'application'  //adds run task!, add main-class for run task
+//    id 'java-library' //adds api command!
+}
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+java.sourceCompatibility JavaVersion.VERSION_17
+//jar.enabled = true
+
+/*
+ * add below to use 'java -jar ..' command!
+ * else use 'gradle run' or 'java -cp ...jar className'
+ */
+//jar {
+//    manifest {
+//        attributes('Implementation-Title': 'core',
+//                'Implementation-Version': archiveVersion,
+////                   'Class-Path': configurations.compile.collect { it.getName() }.join(' '),
+//                'Main-Class': 'org.core.Main')
+//
+//    }
+//}
+
+application {
+    // run task can be executed!
+    // Define the (full path) main class for the application.
+    mainClass = 'org.core.Main'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+}
+
+test {
+    //for junit5
+    useJUnitPlatform()
+}

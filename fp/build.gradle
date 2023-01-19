@@ -1,0 +1,32 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+java.sourceCompatibility JavaVersion.VERSION_17
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    /**
+     * dependency, for build/run tasks
+     * but, java commands, use -cp to add core project jar!!
+     */
+    implementation project(':core')
+
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+
+}
+
+application {
+    mainClass = "org.example.Main"
+}
+
+test {
+    useJUnitPlatform()
+}

@@ -1,0 +1,11 @@
+.vs_code
+.idea
+.gradle
+.settings
+
+#
+.DS_Store
+
+#
+out
+build

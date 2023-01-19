@@ -1,0 +1,4 @@
+rootProject.name = 'multi-project-1'
+include 'fp'
+include 'core'
+
