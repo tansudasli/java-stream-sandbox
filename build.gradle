@@ -26,7 +26,7 @@ java.sourceCompatibility JavaVersion.VERSION_17
 // Define the (full path) main class for the application.
 //application {
 //
-//    mainClass = 'HelloWorld'
+//    mainClass = 'org.example.Main'
 //}
 
 repositories {
@@ -34,6 +34,12 @@ repositories {
 }
 
 dependencies {
+    /**
+     * dependency, for build/run tasks
+     * but, java commands, use -cp to add core project jar!!
+     */
+//    implementation project(':core')
+
     //  src/test folder related libs
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.2'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.9.2'
