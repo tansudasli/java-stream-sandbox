@@ -1,31 +1,31 @@
 plugins {
     id 'java'
-    id 'application'  //adds run task!, add main-class for run task
+    id 'application'  //adds the run task. also add Application {main-class}
 //    id 'java-library' //adds api command!
 }
 
-group 'org.example'
+group 'org.core'
 version '1.0-SNAPSHOT'
 java.sourceCompatibility JavaVersion.VERSION_17
-//jar.enabled = true
 
-/*
+/* for multiple modules, inject into related build.gradle
  * add below to use 'java -jar ..' command!
  * else use 'gradle run' or 'java -cp ...jar className'
  */
-//jar {
-//    manifest {
-//        attributes('Implementation-Title': 'core',
-//                'Implementation-Version': archiveVersion,
-////                   'Class-Path': configurations.compile.collect { it.getName() }.join(' '),
-//                'Main-Class': 'org.core.Main')
-//
-//    }
-//}
+jar {
+    manifest {
+        attributes('Implementation-Title': 'Gradle Sandbox',
+                'Implementation-Version': archiveVersion,
+//                   'Class-Path': configurations.compile.collect { it.getName() }.join(' '),
+                'Main-Class': 'org.core.Main')
 
+    }
+}
+
+// for gradle run task
+// Define the (full path) main class for the application.
 application {
-    // run task can be executed!
-    // Define the (full path) main class for the application.
+
     mainClass = 'org.core.Main'
 }
 

@@ -1,22 +1,60 @@
 plugins {
     id 'java'
-    id 'application' //add run task !!
+    id 'application' //adds the run task. also add Application {main-class}
+//    id 'java-library' //adds the api command!
 }
 
 group 'org.example'
 version '1.0-SNAPSHOT'
 java.sourceCompatibility JavaVersion.VERSION_17
 
+/* for multiple modules, inject into related build.gradle
+ * add below to use 'java -jar ..' command!
+ * else use 'gradle run' or 'java -cp ...jar className'
+ */
+//jar {
+//    manifest {
+//        attributes('Implementation-Title': 'Gradle Sandbox',
+//                'Implementation-Version': archiveVersion,
+////                   'Class-Path': configurations.compile.collect { it.getName() }.join(' '),
+//                'Main-Class': 'HelloWorld')
+//
+//    }
+//}
+
+// for gradle run task
+// Define the (full path) main class for the application.
+//application {
+//
+//    mainClass = 'HelloWorld'
+//}
+
 repositories {
     mavenCentral()
 }
 
 dependencies {
+    //  src/test folder related libs
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.2'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.9.2'
+
+//    src/main folder related libs
+//    implementation ....
 }
 
 test {
-    //to enable junit5
+    //for junit5
     useJUnitPlatform()
+}
+
+/*
+ * custom task definition
+ * register first, then define
+ */
+tasks.register('hi') {
+    description 'to see some parameter values'
+
+    println "hi"
+    println ant
+    println buildDir
 }
