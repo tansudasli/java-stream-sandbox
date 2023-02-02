@@ -2,6 +2,7 @@ plugins {
     id 'java'
     id 'application'  //adds the run task. also add Application {main-class}
 //    id 'java-library' //adds api command!
+    id "me.champeau.jmh" version "0.6.7"   //jmh benchmarking plugin
 }
 
 group 'org.core'
@@ -34,8 +35,14 @@ repositories {
 }
 
 dependencies {
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.9.2'
+
+    //for src.jmh folder.. package names must be same!
+    jmh 'org.openjdk.jmh:jmh-core:1.35'
+    jmh 'org.openjdk.jmh:jmh-generator-annprocess:1.35'
+
+    //that solves the missing /META-INF/BenchmarkList error
+    jmhAnnotationProcessor 'org.openjdk.jmh:jmh-generator-annprocess:1.35'
 }
 
 test {

@@ -43,7 +43,6 @@ dependencies {
 
     //  src/test folder related libs
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.2'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.9.2'
 
 //    src/main folder related libs
 //    implementation ....
