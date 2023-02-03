@@ -17,26 +17,12 @@ public class MainMultiThread {
         System.out.println(Thread.currentThread() + "...end");
     }
 
-    static void task() {
-        System.out.println(Thread.currentThread() + "..begin");
-
-        System.out.println(
-                "t:" + IntStream.range(0, 10)
-                                .boxed()
-                                .parallel()
-                                .peek(i -> System.out.println(Thread.currentThread().getName() + ":: "+ i))
-                                .toList()
-        );
-
-        System.out.println(Thread.currentThread() + "..end");
-    }
-
     public static void main(String[] args) {
         System.out.println(Thread.currentThread() + ".....");
 
         new Thread(MainMultiThread::taskMain, "main").start();
 
-        new Thread(MainMultiThread::task, "task").start();
+        new Thread(IEmployeesOperationMultiThread::task, "task").start();
 
         System.out.println(Thread.currentThread() + ".....");
     }

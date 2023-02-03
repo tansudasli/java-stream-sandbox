@@ -1,14 +1,20 @@
 package org.core;
 
+import java.util.stream.IntStream;
+
 public interface IEmployeesOperationMultiThread {
 
     static void task() {
-        System.out.println(Thread.currentThread() + "..start");
+        System.out.println(Thread.currentThread() + "..begin");
 
-        for (int i = 0; i < 100; i++) {
-            System.out.println(i + " " + Thread.currentThread());
-        }
+        System.out.println(
+                "t:" + IntStream.range(0, 10)
+                        .boxed()
+                        .parallel()
+                        .peek(i -> System.out.println(Thread.currentThread().getName() + ":: "+ i))
+                        .toList()
+        );
 
-        System.out.println(Thread.currentThread() + "..done");
+        System.out.println(Thread.currentThread() + "..end");
     }
 }
