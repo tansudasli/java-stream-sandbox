@@ -1,6 +1,6 @@
 package org.example;
 
-import org.core.EmployeesGeneratorFactoryService;
+import org.core.IEmployeesGeneratorFactoryService;
 
 public class Main {
     public static void main(String[] args) {
@@ -8,7 +8,7 @@ public class Main {
         System.out.println(new Fp(5).getI());
 
         //access lib project core
-        EmployeesGeneratorFactoryService.create()
+        IEmployeesGeneratorFactoryService.create()
                 .stream()
                 .forEach(System.out::println);
 

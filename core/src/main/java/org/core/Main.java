@@ -1,27 +1,36 @@
 package org.core;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Stream;
 
 public class Main {
 
-    static List<String> employees() {
-        return EmployeesGeneratorFactoryService.create();
-    }
+    static IEmployeesGeneratorFactoryService employeesGeneratorFactoryService = () -> Arrays.asList("Sali", "Hali");
 
+    static List<String> employees =  IEmployeesGeneratorFactoryService.create();
+
+    /**
+     * EmployeesGeneratorFactoryService has 3 same methods.
+     * <li>off, as FunctionalInterface</li>
+     * <li>of, as Supplier</li>
+     * <li>create, as a traditional method</li>
+     *
+     * @param args ""
+     */
     public static void main(String[] args) {
-//        System.out.println("Hello world!");
 
-        employees().stream()
-                .forEach(System.out::println);
 
-//        Stream.of(employees())
-//                .forEach(System.out::println);
+        employeesGeneratorFactoryService.off().forEach(System.out::println);
+        employees.stream().forEach(System.out::println);
+        Stream.of(employees).forEach(System.out::println);
 
-        //predicate bool
-        //consumer void, input
-        //supplier
+        //predicate boolOutput
+        //consumer  void, input
+        //supplier  output
         //function in, out
-//        Function generator = Arrays::asList;
+        //functional interface
+        //Function generator = Arrays::asList;
 
     }
 }
