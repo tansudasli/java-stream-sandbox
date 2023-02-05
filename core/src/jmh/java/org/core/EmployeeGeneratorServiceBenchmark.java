@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit;
 
 
 @State(Scope.Benchmark)
-public class EmployeesGeneratorBenchmark {
+public class EmployeeGeneratorServiceBenchmark {
 
     @Param({"1", "3"})
     private int size;
@@ -22,8 +22,8 @@ public class EmployeesGeneratorBenchmark {
     @Setup(Level.Trial)   //trial=warmup
     public void init() {
 
-        service = IEmployeesGeneratorFactoryService.create();
-        serviceOf = IEmployeesGeneratorFactoryService.of.get();
+        service = IEmployeeGeneratorService.create();
+        serviceOf = IEmployeeGeneratorService.of.get();
     }
 
     @Benchmark
@@ -47,18 +47,18 @@ public class EmployeesGeneratorBenchmark {
     }
 
     //./gradlew clean build jmhJar
-    // java -cp build/libs/java-fundamentals-1.0-SNAPSHOT-jmh.jar org.core.EmployeesGeneratorBenchmark
+    // java -cp build/libs/java-fundamentals-1.0-SNAPSHOT-jmh.jar org.core.EmployeeGeneratorServiceBenchmark
     //   -rf json -rff result.json
     public static void main(String[] args) throws Exception {
 
         var opt = new OptionsBuilder()
-                .include(EmployeesGeneratorBenchmark.class.getName())
+                .include(EmployeeGeneratorServiceBenchmark.class.getName())
                 .jvmArgs("-Xms2g", "-Xmx2g", "-XX:+UseG1GC")
                 .warmupIterations(1)
                 .measurementIterations(2)
                 .forks(3)
                 .resultFormat(ResultFormatType.JSON)
-                .result("build/".concat(EmployeesGeneratorBenchmark.class.getName()).concat(".json"))
+                .result("build/".concat(EmployeeGeneratorServiceBenchmark.class.getName()).concat(".json"))
                 .build() ;
 
         new Runner(opt).run() ;

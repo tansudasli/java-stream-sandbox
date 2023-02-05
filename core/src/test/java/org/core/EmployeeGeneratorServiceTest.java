@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class EmployeesGeneratorFactoryServiceTest {
+class EmployeeGeneratorServiceTest {
 
     static int EMPLOYEE_COUNT = 5;
     static String EMPLOYEE_FIRST = "Ali";
@@ -13,13 +13,13 @@ class EmployeesGeneratorFactoryServiceTest {
     @Test
     @DisplayName("Test employee count == 5")
     void checkEmployeesCount() {
-        assertEquals(EMPLOYEE_COUNT, IEmployeesGeneratorFactoryService.create().size());
+        assertEquals(EMPLOYEE_COUNT, IEmployeeGeneratorService.create().size());
     }
 
     @Test
     @DisplayName("Test 1st employee is Ali")
     void checkFirstEmployee() {
-        assertEquals(EMPLOYEE_FIRST, IEmployeesGeneratorFactoryService.create().stream()
+        assertEquals(EMPLOYEE_FIRST, IEmployeeGeneratorService.create().stream()
                 .findFirst()
                 .orElse(null));
     }

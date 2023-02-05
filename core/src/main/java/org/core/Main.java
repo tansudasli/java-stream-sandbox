@@ -6,9 +6,9 @@ import java.util.stream.Stream;
 
 public class Main {
 
-    static IEmployeesGeneratorFactoryService employeesGeneratorFactoryService = () -> Arrays.asList("Sali", "Hali");
+    static IEmployeeGeneratorService employeesGeneratorFactoryService = () -> Arrays.asList("Sali", "Hali");
 
-    static List<String> employees =  IEmployeesGeneratorFactoryService.create();
+    static List<String> employees =  IEmployeeGeneratorService.create();
 
     /**
      * EmployeesGeneratorFactoryService has 3 same methods.
