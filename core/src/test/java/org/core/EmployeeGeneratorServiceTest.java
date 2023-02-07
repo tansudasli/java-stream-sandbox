@@ -7,8 +7,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class EmployeeGeneratorServiceTest {
 
-    static int EMPLOYEE_COUNT = 5;
-    static String EMPLOYEE_FIRST = "Ali";
+    static int EMPLOYEE_COUNT = 122;
+    static String EMPLOYEE_FIRST = "Ant";
 
     @Test
     @DisplayName("Test employee count == 5")
