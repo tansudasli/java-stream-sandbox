@@ -6,7 +6,7 @@ import java.util.stream.IntStream;
 /**
  * simulates operations/task on employee data
  */
-public interface IEmployeeOperations {
+public interface ITasks {
 
     static void taskStream(Optional<Integer> last) {
         System.out.println(Thread.currentThread() + "..begin");

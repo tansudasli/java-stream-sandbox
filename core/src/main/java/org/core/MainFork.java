@@ -64,16 +64,17 @@ class TaskTraditionalFor extends RecursiveAction {
 }
 public class MainFork implements ILast {
 
+    //invoke waits the result
     public static Consumer<Integer> spark = (last) -> ForkJoinPool.commonPool()
                                                      .invoke(new
-                                                             TaskTraditionalFor(Optional.of(LAST/2),
-                                                                                Optional.of(LAST),
+                                                             TaskTraditionalFor(Optional.of(last/2),
+                                                                                Optional.of(last),
                                                                                 Optional.of(0)));
 
     public static void main(String[] args) throws ExecutionException, InterruptedException {
 
 //        ForkJoinPool.commonPool()
-//                .submit(IEmployeeOperations::taskTraditionalFor)
+//                .submit(ITasks::taskTraditionalFor)
 //                .get();
         System.out.println("sss");
 //        TaskTraditionalFor taskTraditionalFor = new TaskTraditionalFor();

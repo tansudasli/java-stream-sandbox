@@ -8,9 +8,9 @@ public class MainStream {
         System.out.println(Thread.currentThread() + ".....");
 
         //no thread pool, just old-fashioned another thread w/ stream usage
-//        new Thread(() -> IEmployeeOperations.taskTraditionalFor(Optional.of(LAST)), "main").start();
-        new Thread(() -> IEmployeeOperations.taskStream(Optional.of(ILast.LAST)), "task").start();
-//        IEmployeeOperations.taskParallelStream(Optional.of(LAST));
+//        new Thread(() -> ITasks.taskTraditionalFor(Optional.of(LAST)), "main").start();
+        new Thread(() -> ITasks.taskStream(Optional.of(ILast.LAST)), "task").start();
+//        ITasks.taskParallelStream(Optional.of(LAST));
 
         System.out.println(Thread.currentThread() + ".....");
     }

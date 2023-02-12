@@ -6,7 +6,7 @@ public class MainTraditional {
 
     public static void main(String[] args) {
 
-            IEmployeeOperations.taskTraditionalFor(Optional.of(ILast.LAST));
+            ITasks.taskTraditionalFor(Optional.of(ILast.LAST));
     }
 
 }

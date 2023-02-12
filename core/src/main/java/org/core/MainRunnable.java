@@ -8,9 +8,9 @@ public class MainRunnable {
         System.out.println(Thread.currentThread() + ".....");
 
         //no thread pool, just old-fashioned another thread
-        new Thread(() -> IEmployeeOperations.taskTraditionalFor(Optional.of(ILast.LAST)), "main").start();
-//        new Thread(() -> IEmployeeOperations.taskStream(Optional.of(LAST)), "task").start();
-//        IEmployeeOperations.taskParallelStream(Optional.of(LAST));
+        new Thread(() -> ITasks.taskTraditionalFor(Optional.of(ILast.LAST)), "main").start();
+//        new Thread(() -> ITasks.taskStream(Optional.of(LAST)), "task").start();
+//        ITasks.taskParallelStream(Optional.of(LAST));
 
         System.out.println(Thread.currentThread() + ".....");
     }
