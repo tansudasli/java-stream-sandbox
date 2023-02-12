@@ -43,7 +43,7 @@ public class TasksBenchmark {
 
         var opt = new OptionsBuilder()
                 .include(TasksBenchmark.class.getName())
-                .jvmArgs("-Xms2g", "-Xmx2g", "-XX:+UseG1GC")
+                .jvmArgs("-Xms1g", "-Xmx1g", "-XX:+UseG1GC")
 //                .threads(2)   //increases jmh-threads, if your test is already multithreaded, it may badly affect your perf.
                 .warmupIterations(1)
                 .measurementIterations(1)
