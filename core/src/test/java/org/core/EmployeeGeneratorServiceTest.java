@@ -11,7 +11,7 @@ class EmployeeGeneratorServiceTest {
     static String EMPLOYEE_FIRST = "Ant";
 
     @Test
-    @DisplayName("Test employee count == 5")
+    @DisplayName("Test employee count == 122")
     void checkEmployeesCount() {
         assertEquals(EMPLOYEE_COUNT, IEmployeeGeneratorService.create().size());
     }

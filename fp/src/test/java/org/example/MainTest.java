@@ -11,7 +11,7 @@ class MainTest {
     @Test
     @DisplayName("Can fp module access to core module ?")
     void checkEmployeesGeneratorFactoryServiceAccess() {
-        assertEquals(5, IEmployeeGeneratorService.create().size());
+        assertEquals(122, IEmployeeGeneratorService.create().size());
     }
 
 }
