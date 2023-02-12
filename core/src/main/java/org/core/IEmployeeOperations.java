@@ -1,5 +1,6 @@
 package org.core;
 
+import java.util.Optional;
 import java.util.stream.IntStream;
 
 /**
@@ -7,39 +8,42 @@ import java.util.stream.IntStream;
  */
 public interface IEmployeeOperations {
 
-    static void taskStream() {
+    static void taskStream(Optional<Integer> last) {
         System.out.println(Thread.currentThread() + "..begin");
 
+        String log = ILast.log ? Thread.currentThread().getName() + ": "  : "";
+
         System.out.println(
-                "t:" + IntStream.range(0, 10)
+                "t:" + IntStream.range(0, last.orElse(10))
                         .boxed()
-                        .peek(i -> System.out.println(Thread.currentThread().getName() + ":: "+ i))
+                        .peek(i -> System.out.println(log + i))
                         .toList()
         );
 
         System.out.println(Thread.currentThread() + "..end");
     }
 
-    static void taskParallelStream() {
+    static void taskParallelStream(Optional<Integer> last) {
         System.out.println(Thread.currentThread() + "..begin");
 
-        System.out.println(
-                "t:" + IntStream.range(0, 10)
-                        .boxed()
-                        .parallel()
-                        .peek(i -> System.out.println(Thread.currentThread().getName() + ":: "+ i))
-                        .toList()
-        );
+        String log = ILast.log ? Thread.currentThread().getName() + ": "  : "";
+
+        IntStream.range(0, last.orElse(10))
+                .boxed()
+                .parallel()
+//                        .peek(i -> log + i))
+                .forEach(i -> System.out.println(log + i));
 
         System.out.println(Thread.currentThread() + "..end");
     }
 
-    static void taskTraditionalFor() {
+    static void taskTraditionalFor(Optional<Integer> last) {
         System.out.println(Thread.currentThread() + "...begin");
 
-        for (int i = 0; i < 10; i++)
-            System.out.println("m:" +
-                               Thread.currentThread().getName() + ":" + i);
+        String log = ILast.log ? Thread.currentThread().getName() + ": "  : "";
+
+        for (int i = 0; i < last.orElse(10); i++)
+            System.out.println(log + i);
 
         System.out.println(Thread.currentThread() + "...end");
     }
