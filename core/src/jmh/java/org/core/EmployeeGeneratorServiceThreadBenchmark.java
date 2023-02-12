@@ -31,11 +31,11 @@ public class EmployeeGeneratorServiceThreadBenchmark {
 
     /**<b>Thread Concepts</b> [create -> start ---> join]
      *  <li>pooling</li>
-     *  <li> accessing same field :: locking (synchronized), Atomic Ops.</li>
-     *  <li> Inter communication :: accessing respectively (producer-consumer) :: (wait & notify)</li>
-     *  <li> flow (join, sleep)</li>
-     *  <li> strategy :: how to define the problem for multi-threading</li>
-     *  <li> computations vs IO</li>
+     *  <li>accessing same field :: locking (synchronized), Atomic Ops.</li>
+     *  <li>Inter communication :: accessing respectively (producer-consumer) :: (wait & notify)</li>
+     *  <li>flow (join, sleep)</li>
+     *  <li>strategy :: how to define the problem for multi-threading</li>
+     *  <li>computations vs IO</li>
      * <p>
      *
      * <b>Interfaces</b><p>
@@ -50,15 +50,15 @@ public class EmployeeGeneratorServiceThreadBenchmark {
      * <p>
      *  Fork/Join         :: 2011     -> dividing into smart subtasks & merging for parallel programming
      *  ::: task = ....
-     *  pool = ForkJoinPool.commonPool()      //a kind of Executors!
-     *  pool.execute(task)       void,
-     *  pool.invoke(task)        waits, then return result immediately,
-     *  pool.submit(task).get()  waits, then use get() for result
-     *
+     *  pool = new ForkJoinPool()      //a kind of Executors! ... ForkJoinPool.commonPool()
+     *  pool.execute(task)       void (async),
+     *  pool.invoke(task)        waits, then returns result immediately (sync),
+     *  pool.submit(task).get()  waits, then use get() for result (async)
+     * <p>
      *  subtask = ...
      *  subTask.fork()
      *  subTask.join() or subTask.invoke()
-     *
+     * <p>
      *               Future<T>
      *                  |
      *             ForkJoinTask<T>
