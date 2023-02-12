@@ -14,7 +14,7 @@ public class TasksBenchmark {
 
     @Benchmark
     @BenchmarkMode({Mode.AverageTime, Mode.Throughput})
-    @Measurement(iterations = 1, time = 1, timeUnit = TimeUnit.MILLISECONDS)
+    @Measurement(iterations = 1, time = 10, timeUnit = TimeUnit.MILLISECONDS)
     @Warmup(iterations = 1, time = 1, timeUnit = TimeUnit.MILLISECONDS)
     @Fork(0)
     @OutputTimeUnit(TimeUnit.MILLISECONDS)
@@ -24,7 +24,7 @@ public class TasksBenchmark {
 
     @Benchmark
     @BenchmarkMode({Mode.AverageTime, Mode.Throughput})
-    @Measurement(iterations = 1, time = 1, timeUnit = TimeUnit.MILLISECONDS)
+    @Measurement(iterations = 1, time = 10, timeUnit = TimeUnit.MILLISECONDS)
     @Warmup(iterations = 1, time = 1, timeUnit = TimeUnit.MILLISECONDS)
     @Fork(0)
     @OutputTimeUnit(TimeUnit.MILLISECONDS)
@@ -43,7 +43,7 @@ public class TasksBenchmark {
 
         var opt = new OptionsBuilder()
                 .include(TasksBenchmark.class.getName())
-                .jvmArgs("-Xms1g", "-Xmx1g", "-XX:+UseG1GC")
+                .jvmArgs("-Xms2g", "-Xmx2g", "-XX:+UseG1GC")
 //                .threads(2)   //increases jmh-threads, if your test is already multithreaded, it may badly affect your perf.
                 .warmupIterations(1)
                 .measurementIterations(1)
