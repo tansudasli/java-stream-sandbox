@@ -42,10 +42,10 @@ public class EmployeeGeneratorServiceThreadBenchmark {
      *  Runnable        :: 1995   ::: new Thread(Class::task).start();
      * <p>
      *  <T> Callable<T> :: 2004   ::: Executors.newFixedThreadPool(n)
-     *                                executorService.submit(Class::task).get()
+     *                                executorService.submit(Class::task).get()  -> returns Future
      * <p>
      *  We can use executors for Callable & also, for Runnable interfaces!
-     *  Basically, Callable returns something where Runnable void!
+     *  Basically, Callable returns something (Future) where Runnable void!
      *  .submit returns Future<T>
      * <p>
      *  Fork/Join         :: 2011     -> dividing into smart subtasks & merging for parallel programming
@@ -53,11 +53,11 @@ public class EmployeeGeneratorServiceThreadBenchmark {
      *  pool = new ForkJoinPool()      //a kind of Executors! ... ForkJoinPool.commonPool()
      *  pool.execute(task)       void (async),
      *  pool.invoke(task)        waits, then returns result immediately (sync),
-     *  pool.submit(task).get()  waits, then use get() for result (async)
+     *  pool.submit(task).get()  waits, then returns Future (async)
      * <p>
      *  subtask = ...
      *  subTask.fork()
-     *  subTask.join() or subTask.invoke()
+     *  subTask.join() or subTask.invoke() or invokeAll()
      * <p>
      *               Future<T>
      *                  |
@@ -67,11 +67,41 @@ public class EmployeeGeneratorServiceThreadBenchmark {
      *  (void)
      *
      *  <p>
-     *  parallelStreams   :: 2011     -> parallel programming, processing in-memory data, mostly non-blocking
-     *  CompletableFuture :: 2014
+     *  parallelStreams   :: 2011     -> parallel programming, processing in-memory data, mostly non-blocking,
+     *    - uses ForkJoinPool.commonPool() behind the scenes!
+     *
+     *
+     *  CompletableFuture :: 2014     -> async computations & trigger dependant computations
+     *   - better @ functional programming than ForkJoinPool & parallelStreams
+     *   - better @ basic exceptional cases than ForkJoinPool
+     *   - uses ForkJoinPool.commonPool() behind the scenes!
+     *   <p>
+     *
+     *   <p>where t1,t2.. are dependent tasks of T
+     *   <p>
+     *   T ... T ...  T ... T            :::independent Tasks
+     *   :
+     *  t1    t1
+     *   :
+     *  t2    t2
+     *   :
+     *  t2
+     *
+     *
+     * CompletableFuture.supplyAsync(::getT1)
+     *             .thenApply(::getT2)
+     *             .exceptionally(e -> new handleTException(e))
+     *             .
+     * if you use your custom pool use thenApplyAsync -> .thenApplySync(::getTx, ioPool)
+     * for more complex exception handling use -> .thenCombine(........)
+     *
+     *  reactiveStreams   :: 2015     ->
+     *   - better @ complex exception handling than CompletableFuture
+     *
      * <p>
      * <p>
-     *  Project loom :: 2022 java19 preview ->  handling numerous blocking requests/responses
+     *  Project loom :: 2022          ->  handling numerous blocking requests/responses
+     *  jdk19 preview
      *     thread == task no way to cut this bound!!
      *     creating 1m thread {now, it costs 2tb ram, 20min startup time & context switching}
      *  - CompletionState/CompletableFuture
