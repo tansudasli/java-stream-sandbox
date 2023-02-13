@@ -4,6 +4,7 @@ import java.util.Optional;
 import java.util.function.Supplier;
 import java.util.stream.IntStream;
 
+
 /**
  * simulates operations/task on employee data
  */
@@ -27,9 +28,12 @@ public interface ITasks {
         return log;
      }
 
+//     This will cause not thread-safe operation. every thread will access same shared value
 //     String log2 = ILast.log ? Thread.currentThread().getName() + ": " : "";
 
      Supplier<String> log  = () -> ILast.log ? Thread.currentThread().getName() + ": " : "";
+
+    ThreadLocal<String> threadLocalLog = ThreadLocal.withInitial(() -> ILast.log ? Thread.currentThread().getName() + ": " : "");
 
      static void taskStream(Optional<Integer> last) {
         System.out.println(Thread.currentThread() + "..begin");
@@ -62,14 +66,18 @@ public interface ITasks {
      static void taskTraditionalFor(Optional<Integer> last) {
         System.out.println(Thread.currentThread() + "...begin");
 
-        //1 obj = 1 task
+//        1 obj = 1 task
 //        String log = ILast.log ? Thread.currentThread().getName() + ": "  : "";
+//        for (int i = 0; i < last.orElse(10); i++)
+//            System.out.println(log + i);
 
-//         for (int i = 0; i < last.orElse(10); i++)
-//             System.out.println(getLog() + i);
+//         sync
+//        for (int i = 0; i < last.orElse(10); i++)
+//            synchronized (ITasks.class) { System.out.println(log.get() + i); }
 
-            for (int i = 0; i < last.orElse(10); i++)
-                synchronized (ITasks.class) { System.out.println(log.get() + i); }
+//         ThreadLocal<T>, 1 obj = 1 thread
+         for (int i = 0; i < last.orElse(10); i++)
+             System.out.println(threadLocalLog.get() + i);
 
         System.out.println(Thread.currentThread() + "...end");
      }
