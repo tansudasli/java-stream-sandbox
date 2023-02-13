@@ -15,7 +15,7 @@ public interface ITasks {
      * 1- not thread-safe  :: lock & synchronized
      * 2- use thread-safe version
      * 3- 1 obj = 1 thread :: ThreadLocal<>
-     * 4- 1 obj = 1 task   :: too much memory, expensive
+     * 4- 1 obj = 1 task   :: too much memory, expensive, probably obj creation inside the task
      */
      static String getLog() {
         String log;
@@ -26,6 +26,8 @@ public interface ITasks {
 
         return log;
      }
+
+//     String log2 = ILast.log ? Thread.currentThread().getName() + ": " : "";
 
      Supplier<String> log  = () -> ILast.log ? Thread.currentThread().getName() + ": " : "";
 
@@ -60,7 +62,11 @@ public interface ITasks {
      static void taskTraditionalFor(Optional<Integer> last) {
         System.out.println(Thread.currentThread() + "...begin");
 
+        //1 obj = 1 task
 //        String log = ILast.log ? Thread.currentThread().getName() + ": "  : "";
+
+//         for (int i = 0; i < last.orElse(10); i++)
+//             System.out.println(getLog() + i);
 
             for (int i = 0; i < last.orElse(10); i++)
                 synchronized (ITasks.class) { System.out.println(log.get() + i); }
