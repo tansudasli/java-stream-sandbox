@@ -8,13 +8,14 @@ import java.util.stream.IntStream;
  */
 public interface ITasks {
 
+    //perf optimization
+    String log = ILast.log ? Thread.currentThread().getName() + ": "  : "";
+
     static void taskStream(Optional<Integer> last) {
         System.out.println(Thread.currentThread() + "..begin");
 
-        String log = ILast.log ? Thread.currentThread().getName() + ": "  : "";
-
         System.out.println(
-                "t:" + IntStream.range(0, last.orElse(10))
+                IntStream.range(0, last.orElse(10))
                         .boxed()
                         .peek(i -> System.out.println(log + i))
                         .toList()
@@ -25,8 +26,6 @@ public interface ITasks {
 
     static void taskParallelStream(Optional<Integer> last) {
         System.out.println(Thread.currentThread() + "..begin");
-
-        String log = ILast.log ? Thread.currentThread().getName() + ": "  : "";
 
         IntStream.range(0, last.orElse(10))
                 .boxed()
@@ -39,8 +38,6 @@ public interface ITasks {
 
     static void taskTraditionalFor(Optional<Integer> last) {
         System.out.println(Thread.currentThread() + "...begin");
-
-        String log = ILast.log ? Thread.currentThread().getName() + ": "  : "";
 
         for (int i = 0; i < last.orElse(10); i++)
             System.out.println(log + i);
