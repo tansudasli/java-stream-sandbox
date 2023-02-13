@@ -49,9 +49,12 @@ class TaskTraditionalFor extends RecursiveAction {
                 //Todo: create separate tasks | slice big task into small tasks then invoke, execute, submit etc..
                 int threadCount = calculateThreadCount.get();
 
+                System.out.println("Pending tasks: " + getQueuedTaskCount());
+
                 TaskTraditionalFor t1 = new TaskTraditionalFor(Optional.of(last/threadCount),
                                                                 Optional.of(last/threadCount),
                                                                 Optional.of(first));
+
                 TaskTraditionalFor t2 = new TaskTraditionalFor(Optional.of(last),
                                                                 Optional.of(last),
                                                                 Optional.of(last/threadCount));
@@ -65,13 +68,14 @@ class TaskTraditionalFor extends RecursiveAction {
 public class MainFork implements ILast {
 
     //invoke waits the result
-    public static Consumer<Integer> spark = (last) -> ForkJoinPool.commonPool()
+    public static ForkJoinPool pool = ForkJoinPool.commonPool();
+    public static Consumer<Integer> spark = (last) -> pool
                                                      .invoke(new
                                                              TaskTraditionalFor(Optional.of(last/2),
-                                                                                Optional.of(last),
-                                                                                Optional.of(0)));
+                                                             Optional.of(last),
+                                                             Optional.of(0)));
 
-    public static void main(String[] args) throws ExecutionException, InterruptedException {
+    public static void main(String[] args) throws ExecutionException {
 
 //        ForkJoinPool.commonPool()
 //                .submit(ITasks::taskTraditionalFor)
@@ -84,6 +88,15 @@ public class MainFork implements ILast {
 //        ForkJoinPool.commonPool().invoke(new TaskTraditionalFor());    //commonPool
 
         spark.accept(LAST);
+
+//        do {
+//            System.out.println("Main parallelism: " + pool.getParallelism());
+//
+//            try { TimeUnit.MILLISECONDS.sleep(5); } catch (InterruptedException e) { throw new RuntimeException(e);}
+//
+//        } while (!pool.isShutdown());
+
+        pool.shutdown();
 
 //        Thread.sleep(5000);
 
