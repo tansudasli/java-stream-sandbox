@@ -1,6 +1,8 @@
 package org.core;
 
 import java.util.Optional;
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 import java.util.function.Supplier;
 import java.util.stream.IntStream;
 
@@ -63,6 +65,24 @@ public interface ITasks {
         System.out.println(Thread.currentThread() + "..end");
      }
 
+     Consumer<Integer> forThreadLocal = (l) -> {
+         //Todo: make it 1 line w/ IntStream
+         for (int i = 0; i < l; i++)
+             System.out.println(threadLocalLog.get() + i);
+     };
+
+     Consumer<Integer> forSynchronized = (l) -> {
+         for (int i = 0; i < l; i++)
+            synchronized (ITasks.class) { System.out.println(log.get() + i); }
+     };
+
+     Consumer<Integer> forPerTask = (l) -> {
+        String log = ILast.log ? Thread.currentThread().getName() + ": "  : "";
+
+        for (int i = 0; i < l; i++)
+            System.out.println(log + i);
+     };
+
      static void taskTraditionalFor(Optional<Integer> last) {
         System.out.println(Thread.currentThread() + "...begin");
 
@@ -75,9 +95,10 @@ public interface ITasks {
 //        for (int i = 0; i < last.orElse(10); i++)
 //            synchronized (ITasks.class) { System.out.println(log.get() + i); }
 
-//         ThreadLocal<T>, 1 obj = 1 thread
-         for (int i = 0; i < last.orElse(10); i++)
-             System.out.println(threadLocalLog.get() + i);
+////         ThreadLocal<T>, 1 obj = 1 thread
+//         for (int i = 0; i < last.orElse(10); i++)
+//             System.out.println(threadLocalLog.get() + i);
+        forThreadLocal.accept(last.orElse(10));
 
         System.out.println(Thread.currentThread() + "...end");
      }
