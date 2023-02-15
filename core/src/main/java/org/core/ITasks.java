@@ -1,7 +1,8 @@
 package org.core;
 
 import java.util.Optional;
-import java.util.function.BiConsumer;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 import java.util.stream.IntStream;
@@ -14,11 +15,12 @@ public interface ITasks {
 
     /**
      * When we make below line shared by all threads, it gets crazy :)
+     * <p>to ensure thread-safety:
      *
-     * 1- not thread-safe  :: lock & synchronized
-     * 2- use thread-safe version
-     * 3- 1 obj = 1 thread :: ThreadLocal<>
-     * 4- 1 obj = 1 task   :: too much memory, expensive, probably obj creation inside the task
+     * <li>1- sync             :: lock & synchronized
+     * <li>2- use thread-safe version
+     * <li>3- 1 obj = 1 thread :: ThreadLocal<>
+     * <li>4- 1 obj = 1 task   :: too much memory, expensive, probably obj creation inside the task
      */
      static String getLog() {
         String log;
@@ -35,7 +37,7 @@ public interface ITasks {
 
      Supplier<String> log  = () -> ILast.log ? Thread.currentThread().getName() + ": " : "";
 
-    ThreadLocal<String> threadLocalLog = ThreadLocal.withInitial(() -> ILast.log ? Thread.currentThread().getName() + ": " : "");
+    ThreadLocal<String> logContextHolder = ThreadLocal.withInitial(() -> ILast.log ? Thread.currentThread().getName() + ": " : "");
 
      static void taskStream(Optional<Integer> last) {
         System.out.println(Thread.currentThread() + "..begin");
@@ -68,20 +70,32 @@ public interface ITasks {
      Consumer<Integer> forThreadLocal = (l) -> {
          //Todo: make it 1 line w/ IntStream
          for (int i = 0; i < l; i++)
-             System.out.println(threadLocalLog.get() + i);
+             System.out.println(logContextHolder.get() + i);
      };
-
      Consumer<Integer> forSynchronized = (l) -> {
          for (int i = 0; i < l; i++)
             synchronized (ITasks.class) { System.out.println(log.get() + i); }
      };
 
-     Consumer<Integer> forPerTask = (l) -> {
+    Consumer<Integer> forLock = (l) -> {
+        String log = ILast.log ? Thread.currentThread().getName() + ": "  : "";
+
+        Lock lock = new ReentrantLock();
+
+        lock.lock();
+        for (int i = 0; i < l; i++)
+            System.out.println(log + i);
+        lock.unlock();
+    };
+
+     Consumer<Integer> forTaskLocal = (l) -> {
         String log = ILast.log ? Thread.currentThread().getName() + ": "  : "";
 
         for (int i = 0; i < l; i++)
             System.out.println(log + i);
      };
+
+
 
      static void taskTraditionalFor(Optional<Integer> last) {
         System.out.println(Thread.currentThread() + "...begin");
@@ -95,10 +109,13 @@ public interface ITasks {
 //        for (int i = 0; i < last.orElse(10); i++)
 //            synchronized (ITasks.class) { System.out.println(log.get() + i); }
 
-////         ThreadLocal<T>, 1 obj = 1 thread
+//         ThreadLocal<T>, 1 obj = 1 thread
 //         for (int i = 0; i < last.orElse(10); i++)
 //             System.out.println(threadLocalLog.get() + i);
-        forThreadLocal.accept(last.orElse(10));
+//        forThreadLocal.accept(last.orElse(10));
+
+//         lock
+        forLock.accept(last.orElse(10));
 
         System.out.println(Thread.currentThread() + "...end");
      }
