@@ -38,20 +38,37 @@ public class EmployeeGeneratorServiceThreadBenchmark {
      *  <li>computations vs IO</li>
      * <p>
      *
-     * <b>Interfaces</b><p>
-     *  Runnable        :: 1995   ::: new Thread(Class::task).start();
-     * <p>
-     *  <T> Callable<T> :: 2004   ::: Executors.newFixedThreadPool(n)
-     *                                executorService.submit(Class::task).get()  -> returns Future
-     * <p>
-     *  We can use executors for Callable & also, for Runnable interfaces!
-     *  Basically, Callable returns something (Future) where Runnable void!
-     *  .submit returns Future<T>
-     * <p>
-     *  Fork/Join         :: 2011     -> dividing into smart subtasks & merging for parallel programming
-     *  ::: task = ....
+     * <p><p>
+     *     :::::::::::::::::::::::::::::::::::::::::::::::::::::
+     *  Runnable         :: 1995     -> thread = task
+     *
+     *
+     *  new Thread(Class::task).start();
+     *
+     * <p><p>
+     *     :::::::::::::::::::::::::::::::::::::::::::::::::::::
+     *  <T> Callable<T>  :: 2004     -> pooling for better thread management
+     *
+     *  - better @ thread creation via pooling than new Thread().....
+     *  - We can use executors for Callable & also, for Runnable interfaces!
+     *  - Callable returns something!
+     *  - Runnable is void!
+     *  <p>
+     *   executorService = Executors.newFixedThreadPool(n)
+     *   executorService.submit(Class::task).get()   -> returns Future
+     *
+     *   .submit()
+     *   .execute()
+     *   .invokeAll()
+     *
+     *   executorService.shutdown()
+     *
+     * <p><p>
+     *     :::::::::::::::::::::::::::::::::::::::::::::::::::::
+     *  Fork/Join        :: 2011     -> dividing into smart subtasks & merging for parallel programming
+     *
      *  pool = new ForkJoinPool()      //a kind of Executors! ... ForkJoinPool.commonPool()
-     *  pool.execute(task)       void (async),
+     *  pool.execute(task)       void (async), fire & forget
      *  pool.invoke(task)        waits, then returns result immediately (sync),
      *  pool.submit(task).get()  waits, then returns Future (async)
      * <p>
@@ -66,12 +83,18 @@ public class EmployeeGeneratorServiceThreadBenchmark {
      *  RecursiveAction        RecursiveTask<T>
      *  (void)
      *
-     *  <p>
-     *  parallelStreams   :: 2011     -> parallel programming, processing in-memory data, mostly non-blocking,
+     * <p><p>
+     *     :::::::::::::::::::::::::::::::::::::::::::::::::::::
+     *  parallelStreams  :: 2011     -> parallel programming, processing in-memory data, mostly non-blocking,
+     *
      *    - uses ForkJoinPool.commonPool() behind the scenes!
      *
      *
+     *
+     * <p><p>
+     *     :::::::::::::::::::::::::::::::::::::::::::::::::::::
      *  CompletableFuture :: 2014     -> async computations & trigger dependant computations
+     *
      *   - better @ functional programming than ForkJoinPool & parallelStreams
      *   - better @ basic exceptional cases than ForkJoinPool
      *   - uses ForkJoinPool.commonPool() behind the scenes!
@@ -95,15 +118,22 @@ public class EmployeeGeneratorServiceThreadBenchmark {
      * if you use your custom pool use thenApplyAsync -> .thenApplySync(::getTx, ioPool)
      * for more complex exception handling use -> .thenCombine(........)
      *
+     *
+     * <p><p>
+     *     :::::::::::::::::::::::::::::::::::::::::::::::::::::
      *  reactiveStreams   :: 2015     ->
+     *
      *   - better @ complex exception handling than CompletableFuture
      *
-     * <p>
-     * <p>
-     *  Project loom :: 2022          ->  handling numerous blocking requests/responses
-     *  jdk19 preview
-     *     thread == task no way to cut this bound!!
-     *     creating 1m thread {now, it costs 2tb ram, 20min startup time & context switching}
+     *
+     *
+     * <p><p>
+     *     :::::::::::::::::::::::::::::::::::::::::::::::::::::
+     *  Project loom :: 2022          ->  lightweight thread == task, handling numerous blocking requests/responses
+     *
+     *  - jdk19 preview
+     *  - lightweight thread == task,  no way to cut this bound!!
+     *  - creating 1m thread {now, it costs 2tb ram, 20min startup time & context switching}
      *  - CompletionState/CompletableFuture
      *  - async -> reactive programming
      *  - Mono/Multi (spring framework)
