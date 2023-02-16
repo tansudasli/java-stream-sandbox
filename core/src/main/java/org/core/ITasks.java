@@ -3,6 +3,7 @@ package org.core;
 import java.util.Optional;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 import java.util.stream.IntStream;
@@ -37,7 +38,7 @@ public interface ITasks {
 
      Supplier<String> log  = () -> ILast.log ? Thread.currentThread().getName() + ": " : "";
 
-    ThreadLocal<String> logContextHolder = ThreadLocal.withInitial(() -> ILast.log ? Thread.currentThread().getName() + ": " : "");
+     ThreadLocal<String> logContextHolder = ThreadLocal.withInitial(() -> ILast.log ? Thread.currentThread().getName() + ": " : "");
 
      static void taskStream(Optional<Integer> last) {
         System.out.println(Thread.currentThread() + "..begin");
@@ -80,12 +81,18 @@ public interface ITasks {
     Consumer<Integer> forLock = (l) -> {
         String log = ILast.log ? Thread.currentThread().getName() + ": "  : "";
 
-        Lock lock = new ReentrantLock();
+//        Lock lock = new ReentrantLock();
+        ReentrantReadWriteLock.ReadLock readLock = new ReentrantReadWriteLock().readLock();
 
-        lock.lock();
-        for (int i = 0; i < l; i++)
-            System.out.println(log + i);
-        lock.unlock();
+//        lock.lock();
+        readLock.lock();
+        try {
+            for (int i = 0; i < l; i++)
+                System.out.println(log + i);
+        } finally {
+//            lock.unlock();
+            readLock.unlock();
+        }
     };
 
      Consumer<Integer> forTaskLocal = (l) -> {
