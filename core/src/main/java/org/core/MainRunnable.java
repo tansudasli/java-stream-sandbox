@@ -10,6 +10,7 @@ public class MainRunnable {
         //no thread pool, just old-fashioned another thread
         new Thread(() -> ITasks.taskTraditionalFor(Optional.of(ILast.LAST))).start();
         new Thread(() -> ITasks.taskTraditionalFor(Optional.of(ILast.LAST))).start();
+        new Thread(() -> ITasks.taskTraditionalFor(Optional.of(ILast.LAST))).start();
 //        new Thread(() -> ITasks.taskStream(Optional.of(LAST)), "task").start();
 //        ITasks.taskParallelStream(Optional.of(LAST));
 

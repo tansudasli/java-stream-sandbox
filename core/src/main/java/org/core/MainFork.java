@@ -1,104 +1,60 @@
 package org.core;
 
 
-import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ForkJoinPool;
-import java.util.concurrent.RecursiveAction;
-import java.util.function.Consumer;
-import java.util.function.Supplier;
+import java.util.function.BiConsumer;
 
-class TaskTraditionalFor extends RecursiveAction {
 
-    /*
-     let's assume we will count to 1m. we will split into smart task.
-    To do splitting, we need to define either counter mechanism or the thread count!
-     Then, at compute() method, we will
-     */
-    int base, last, first;
-    private final Supplier<Integer> calculateThreadCount = () -> 2;
-
-    public TaskTraditionalFor(Optional<Integer> base, Optional<Integer> last, Optional<Integer> first) {
-        this.base = base.orElse(last.orElse(10) / 2);
-        this.last = last.orElse(10);
-        this.first = first.orElse(0);
-    }
-
-    private void base() {
-        String log = ILast.log ? Thread.currentThread().getName() + ": "  : "";
-
-        for (int i = first; i < base; i++)
-            System.out.println(log + i);
-    }
-
-    /**
-     * First                                          ILast<p>
-     * 0.........base.................................10000
-     * <p>
-     * <p>at main body, invoke/execute or submit big-chunky-Task
-     * <p> - create a Task class that extends RecursiveTask or RecursiveAction (void)
-     * <p> - define a Base method
-     * <p> - divide into sub-tasks that has own Base method, then invoke/fork or join the sub-tasks again
-     */
-
-    @Override
-    protected void compute() {
-
-        switch (Integer.signum(last - base)) {
-            case 1  -> {
-                //Todo: create separate tasks | slice big task into small tasks then invoke, execute, submit etc..
-                int threadCount = calculateThreadCount.get();
-
-                System.out.println("Pending tasks: " + getQueuedTaskCount());
-
-                TaskTraditionalFor t1 = new TaskTraditionalFor(Optional.of(last/threadCount),
-                                                                Optional.of(last/threadCount),
-                                                                Optional.of(first));
-
-                TaskTraditionalFor t2 = new TaskTraditionalFor(Optional.of(last),
-                                                                Optional.of(last),
-                                                                Optional.of(last/threadCount));
-
-                invokeAll(t1, t2);
-            }
-            default -> base();
-        }
-    }
-}
 public class MainFork implements ILast {
 
     //invoke waits the result
-    public static ForkJoinPool pool = ForkJoinPool.commonPool();
-    public static Consumer<Integer> spark = (last) -> pool
-                                                     .invoke(new
-                                                             TaskTraditionalFor(Optional.of(last/2),
-                                                             Optional.of(last),
-                                                             Optional.of(0)));
+//    public static ForkJoinPool pool = ForkJoinPool.commonPool();
+    public static ForkJoinPool pool = new ForkJoinPool(ITaskFork.threadCount.get());
+    public static BiConsumer<Integer, Integer> spark = (last, first) -> pool
+                                                        .invoke(new ITaskFork(last, first));
 
-    public static void main(String[] args) throws ExecutionException {
+    public static void main(String[] args) throws ExecutionException, InterruptedException {
 
-//        ForkJoinPool.commonPool()
-//                .submit(ITasks::taskTraditionalFor)
-//                .get();
-        System.out.println("sss");
-//        TaskTraditionalFor taskTraditionalFor = new TaskTraditionalFor();
-//        new ForkJoinPool().execute(new TaskTraditionalFor());          //execute = void
-//        new ForkJoinPool().execute(new TaskTraditionalFor(5, 10, 0));
-//        ForkJoinPool.commonPool().execute(new TaskTraditionalFor(500, 1000, 0));
-//        ForkJoinPool.commonPool().invoke(new TaskTraditionalFor());    //commonPool
+/*
+        ForkJoinPool.commonPool()
+                .submit(ITasks::taskTraditionalFor)
+                .get();
+        TaskTraditionalFor taskTraditionalFor = new TaskTraditionalFor();
+        new ForkJoinPool().execute(new TaskTraditionalFor());          //execute = void
+        new ForkJoinPool().execute(new TaskTraditionalFor(5, 10, 0));
+        ForkJoinPool.commonPool().execute(new TaskTraditionalFor(500, 1000, 0));
+        ForkJoinPool.commonPool().invoke(new TaskTraditionalFor());    //commonPool
+*/
 
-        spark.accept(LAST);
+/*
+           T's are parallel and independent
+           t's are dependent of T
 
-//        do {
-//            System.out.println("Main parallelism: " + pool.getParallelism());
-//
-//            try { TimeUnit.MILLISECONDS.sleep(5); } catch (InterruptedException e) { throw new RuntimeException(e);}
-//
-//        } while (!pool.isShutdown());
+           so that's parallel & concurrent !
 
+           T                   T            T
+        0.....10           10....20      30....40
+          0..5  t1            t1            t1
+          5..10 t2            t2            t2
+
+*/
+
+        spark.accept(10, 0);  //T
+        spark.accept(20, 10); //T
+        spark.accept(40, 30); //T
+
+
+/*
+        do {
+            System.out.println("Main parallelism: " + pool.getParallelism());
+
+            try { TimeUnit.MILLISECONDS.sleep(5); } catch (InterruptedException e) { throw new RuntimeException(e);}
+
+        } while (!pool.isShutdown());
         pool.shutdown();
-
-//        Thread.sleep(5000);
+        Thread.sleep(5000);
+*/
 
     }
 

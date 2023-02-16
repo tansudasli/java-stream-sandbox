@@ -11,6 +11,7 @@ import java.util.concurrent.TimeUnit;
 public class TasksBenchmark {
 
     private final static int LAST = 1000000;
+    private final static int FIRST = 0;
 
     @Benchmark
     @BenchmarkMode({Mode.AverageTime, Mode.Throughput})
@@ -29,7 +30,7 @@ public class TasksBenchmark {
     @Fork(0)
     @OutputTimeUnit(TimeUnit.MILLISECONDS)
     public void testTaskTraditionalForMultiThread() {
-        MainFork.spark.accept(LAST);
+        MainFork.spark.accept(LAST, FIRST);
     }
 
     public static void main(String[] args) throws RunnerException {
