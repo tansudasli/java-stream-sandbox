@@ -10,9 +10,9 @@ public class MainFork implements ILast {
 
     //invoke waits the result
 //    public static ForkJoinPool pool = ForkJoinPool.commonPool();
-    public static ForkJoinPool pool = new ForkJoinPool(ITaskFork.threadCount.get());
+    public static ForkJoinPool pool = new ForkJoinPool(ITaskForkShout.threadCount.get());
     public static BiConsumer<Integer, Integer> spark = (last, first) -> pool
-                                                        .invoke(new ITaskFork(last, first));
+                                                        .invoke(new ITaskForkShout(last, first));
 
     public static void main(String[] args) throws ExecutionException, InterruptedException {
 

@@ -1,12 +1,9 @@
 package org.core;
 
-import java.util.Arrays;
-import java.util.List;
 import java.util.concurrent.RecursiveAction;
 import java.util.function.Supplier;
-import java.util.stream.IntStream;
 
-class ITaskFork extends RecursiveAction {
+class ITaskForkShout extends RecursiveAction {
 
     /*
      let's assume we will count to 1m. we will split into smart task.
@@ -16,7 +13,7 @@ class ITaskFork extends RecursiveAction {
     int base, last, first, end;
     public final static Supplier<Integer> threadCount = () -> 2;
 
-    public ITaskFork(Integer last, Integer first) {
+    public ITaskForkShout(Integer last, Integer first) {
 
         this.base = (last - first) / threadCount.get();
         this.last = last;
@@ -24,7 +21,7 @@ class ITaskFork extends RecursiveAction {
         this.end = first + base;
     }
 
-    public ITaskFork(Integer base, Integer last, Integer first) {
+    public ITaskForkShout(Integer base, Integer last, Integer first) {
 
         this.base = base;
         this.last = last;
@@ -60,8 +57,8 @@ class ITaskFork extends RecursiveAction {
 
             System.out.println("Pending tasks: " + getQueuedTaskCount());
 
-            ITaskFork t1 = new ITaskFork((last-first)/threadCount.get(), end, first);
-            ITaskFork t2 = new ITaskFork((last-first)/threadCount.get(), last, end);
+            ITaskForkShout t1 = new ITaskForkShout((last-first)/threadCount.get(), end, first);
+            ITaskForkShout t2 = new ITaskForkShout((last-first)/threadCount.get(), last, end);
 
             invokeAll(t1, t2);
         } else {
