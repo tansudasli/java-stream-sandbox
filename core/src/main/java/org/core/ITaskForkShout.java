@@ -1,5 +1,6 @@
 package org.core;
 
+import java.util.concurrent.ForkJoinTask;
 import java.util.concurrent.RecursiveAction;
 import java.util.function.Supplier;
 
@@ -60,7 +61,7 @@ class ITaskForkShout extends RecursiveAction {
             ITaskForkShout t1 = new ITaskForkShout((last-first)/threadCount.get(), end, first);
             ITaskForkShout t2 = new ITaskForkShout((last-first)/threadCount.get(), last, end);
 
-            invokeAll(t1, t2);
+            ForkJoinTask.invokeAll(t1, t2);
         } else {
             base();
         }
