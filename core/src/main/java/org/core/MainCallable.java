@@ -1,9 +1,11 @@
 package org.core;
 
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.function.Supplier;
 
 public class MainCallable {
 
@@ -28,11 +30,19 @@ public class MainCallable {
 
 //        System.out.println(executorService.submit(MainCallable::taskCallable).get());
 
-        System.out.println("end");
-
         executorService.shutdown();
 
     }
+
+//    private MainCallable shout(String message) {
+//
+//        System.out.println(Objects.requireNonNullElseGet(message, Thread::currentThread));
+//
+//        return this;
+//    }
+//
+//    private static final Supplier<String> taskCallable = () -> new MainCallable().shout(null)
+//                                                                                 .shout("called").toString();
 
     private static String taskCallable() {
 
