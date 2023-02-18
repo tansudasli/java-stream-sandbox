@@ -39,7 +39,7 @@ public class MainCompletable {
         ExecutorService pool = Executors.newFixedThreadPool(threadCount);
 
         //single thread, loop then sum w/ streams
-        System.out.println("expected: " + ITaskCompletableSum.sum.get());
+        System.out.println("expected: " + ITaskCompletableSum.sum.apply(ILast.LAST));
 
 
         CompletableFuture<Integer> e = CompletableFuture.supplyAsync(ITaskCompletableSum.sum1)

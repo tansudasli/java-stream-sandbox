@@ -1,13 +1,20 @@
 package org.core;
 
+import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.IntStream;
 
+/**
+ * 0 to LAST integers will be summed.
+ *
+ * And problem is framed as dependent (sum1 & sum2) tasks. Normally these tasks are independent.
+ * So, More suitable for ForkJoin operation!
+ */
 public class ITaskCompletableSum {
 
     private static final int slice = 2;
 
-    public static Supplier<Integer> sum  = () -> IntStream.range(0, ILast.LAST).sum();
+    public static Function<Integer, Integer> sum  = (last) -> IntStream.range(0, last).sum();
 
     public static Supplier<Integer> sum1 =
             () -> IntStream.range(0, ILast.LAST/slice)
