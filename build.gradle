@@ -15,7 +15,7 @@ java.sourceCompatibility JavaVersion.VERSION_17
  */
 jar {
     manifest {
-        attributes('Implementation-Title': 'Gradle Sandbox',
+        attributes('Implementation-Title': 'java stream sandbox',
                 'Implementation-Version': archiveVersion,
 //                   'Class-Path': configurations.compile.collect { it.getName() }.join(' '),
                 'Main-Class': 'org.core.Main')
@@ -35,6 +35,9 @@ repositories {
 }
 
 dependencies {
+    //src folder
+    implementation 'com.google.guava:guava:30.0-android'
+
     testImplementation 'org.junit.jupiter:junit-jupiter:5.9.2'
 
     //for src.jmh folder.. package names must be same!
