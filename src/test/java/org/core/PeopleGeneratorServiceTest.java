@@ -41,7 +41,7 @@ class PeopleGeneratorServiceTest {
 
         var count = (long) IPeopleGeneratorService.of.get().size();
 
-        System.out.printf("Age of Σ=%d | size=%d | average=%d\n", total, count, total/count);
+        System.out.printf("Age of Σ=%d | size=%d | average=%f\n", total, count, (double)total/count);
 
     }
 }
