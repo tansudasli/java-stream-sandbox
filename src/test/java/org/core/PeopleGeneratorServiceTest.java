@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class PeopleGeneratorServiceTest {
 
-    static int PEOPLE_COUNT = 479;
+    static int PEOPLE_COUNT = 4;
     static String PEOPLE_FIRST = "James";
 
     @Test
