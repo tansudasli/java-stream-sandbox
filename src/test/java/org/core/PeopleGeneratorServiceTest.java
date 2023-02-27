@@ -41,19 +41,5 @@ class PeopleGeneratorServiceTest {
                 .forEach(System.out::println);
     }
 
-    @Test
-    void averageAge(){
-        Supplier<IllegalArgumentException> missingAgeException = () -> new IllegalArgumentException("age missing!");
 
-        var total = people.stream()
-                        .map(Person::age)
-                        .reduce(Integer::sum)
-                        .orElseThrow(missingAgeException);
-
-//Todo: make this reduce w/ combiner !
-        var count = (long) people.size();
-
-        System.out.printf("Age of Σ=%d | size=%d | average=%f\n", total, count, (double)total/count);
-
-    }
 }
