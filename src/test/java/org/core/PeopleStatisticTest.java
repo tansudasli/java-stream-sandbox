@@ -12,7 +12,7 @@ public class PeopleStatisticTest {
                                                 .stream().distinct()
                                                 .count();
 
-    List<Person> people = IPeopleGeneratorService.of.get();
+    static List<Person> people = IPeopleGeneratorService.of.get();
 
     @Test
     void sumOfAge(){
@@ -30,18 +30,20 @@ public class PeopleStatisticTest {
     @Test
     void meanOfAge(){
         //Todo: make better exception handling
-        Supplier<IllegalArgumentException> missingAgeException = () -> new IllegalArgumentException("age missing!");
-
-        var total = people.stream()
-                .distinct()                          //uses hashCode() and equals() which by default counts all fields!
-                .map(Person::age)
-                .reduce(Integer::sum)
-                .orElseThrow(missingAgeException);
+//        Supplier<IllegalArgumentException> missingAgeException = () -> new IllegalArgumentException("age missing!");
 
         System.out.printf("Size=%d | Capacity=%d\n", SIZE, CAPACITY);
-        System.out.printf("Age of Σ=%d | size=%d | average=%f\n", total, SIZE, (double)(total/CAPACITY));
+        System.out.printf("Age of Σ=%d | size=%d | average=%f\n", total.get(), SIZE, (double)(total.get()/CAPACITY));
 
     }
+
+    //uses hashCode() and equals() which by default counts all fields!
+    //or get Set<Person> to distinct
+    public static Supplier<Integer> total = () -> people.parallelStream().distinct()
+                .map(Person::age)
+                .reduce(Integer::sum)
+                .orElse(-1);
+
     //Todo: min, max, mode, median, μ, σ,
 
 
