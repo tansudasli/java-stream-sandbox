@@ -34,9 +34,7 @@ public class PeopleStatisticTest {
                 .reduce(Integer::sum)
                 .orElseThrow(missingAgeException);
 
-        var count = (long) people.size();
-
-        System.out.printf("Age of Σ=%d | size=%d | average=%f\n", total, count, (double)(total/CAPACITY));
+        System.out.printf("Age of Σ=%d | size=%d | average=%f\n", total, CAPACITY, (double)(total/CAPACITY));
 
     }
     //Todo: min, max, mode, median, μ, σ,
