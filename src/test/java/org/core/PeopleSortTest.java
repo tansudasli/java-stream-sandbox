@@ -22,6 +22,11 @@ public class PeopleSortTest {
         System.out.println(people.get(0).equals(new Person(1, null, "Williams", "James@hotmail.com", "Male", 44, Arrays.asList("1-857-545-5925", "1-894-887-1309"))));
     }
 
+    //choose Comparator interface over Comparable
+    //no need anymore, to implement Comparable or Comparator
+    //no need anymore, Collections.sort
+    //use person.sort() instead
+    //use lambda or Comparator. utilities @streams
     @Test
     void sortByAge() {
         //default stream.sorted() method waited People class must implement Comparable/Comparator interface.!
@@ -37,6 +42,9 @@ public class PeopleSortTest {
 //                .findFirst()
 //                .orElseThrow()
 //                .age(), minAge);
+
+        //not possible due to immutable people list :0
+//        people.sort((Comparator.comparingInt(Person::age)));
 
     }
 
