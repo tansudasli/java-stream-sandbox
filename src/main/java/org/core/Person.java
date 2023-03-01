@@ -18,4 +18,15 @@ public record Person(Integer id, String firstName, String lastname, String email
         //Todo: validate using function chaining (combining pattern) - high order functions
         if (id < 0) throw new IllegalArgumentException("not valid person id!");
     }
+
+    @Override
+    public boolean equals(Object o) {
+        return id.equals(((Person)o).id);
+    }
+
+        //normally hashes all fields
+    @Override
+    public int hashCode() {
+        return id.hashCode();
+    }
 }
