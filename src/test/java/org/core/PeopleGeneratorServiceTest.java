@@ -31,8 +31,8 @@ class PeopleGeneratorServiceTest {
 
     @Test
     void printPhones() {
-//flatmap Stream<Stream<T>>
 
+//flatmap Stream<Stream<T>>
         people.stream()
                 .flatMap((person -> person.phones().stream()))
                 .forEach(System.out::println);

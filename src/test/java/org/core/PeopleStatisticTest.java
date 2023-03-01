@@ -7,6 +7,8 @@ import java.util.function.Supplier;
 
 public class PeopleStatisticTest {
 
+    private static final Integer CAPACITY = IPeopleGeneratorService.of.get().size();
+
     List<Person> people = IPeopleGeneratorService.of.get();
 
     @Test
@@ -24,6 +26,7 @@ public class PeopleStatisticTest {
 
     @Test
     void averageOfAge(){
+        //Todo: make better exception handling
         Supplier<IllegalArgumentException> missingAgeException = () -> new IllegalArgumentException("age missing!");
 
         var total = people.stream()
@@ -33,7 +36,7 @@ public class PeopleStatisticTest {
 
         var count = (long) people.size();
 
-        System.out.printf("Age of Σ=%d | size=%d | average=%f\n", total, count, (double)(total/count));
+        System.out.printf("Age of Σ=%d | size=%d | average=%f\n", total, count, (double)(total/CAPACITY));
 
     }
 
