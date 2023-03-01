@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 import java.util.function.Supplier;
 
-public class PeopleStatistics {
+public class PeopleStatisticTest {
 
     List<Person> people = IPeopleGeneratorService.of.get();
 

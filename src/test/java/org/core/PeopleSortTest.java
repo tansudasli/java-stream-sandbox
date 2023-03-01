@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.*;
 
-public class PeopleSort {
+public class PeopleSortTest {
 
     List<Person> people = IPeopleGeneratorService.of.get();
 
