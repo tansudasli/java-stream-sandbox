@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 public class PeopleMapTest {
 
     Map<Integer, Person> data = IPeopleGeneratorService.of.get()
-                                           .stream()
+                                           .stream().distinct()
                                            .collect(Collectors.toMap(Person::id, person -> person));
 
     @Test

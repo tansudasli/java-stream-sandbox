@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class PeopleGeneratorServiceTest {
 
-    static int PEOPLE_COUNT = 4;
+    static int PEOPLE_COUNT = 5;
     static String PEOPLE_FIRST = "James";
     List<Person> people = IPeopleGeneratorService.of.get();
 
