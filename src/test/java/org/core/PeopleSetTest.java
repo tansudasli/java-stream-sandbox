@@ -10,8 +10,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class PeopleSetTest {
 
     private static final Integer CAPACITY = IPeopleGeneratorService.of.get().size();
-    private static final Integer SIZE = CAPACITY - 1;
+    private static final long SIZE =  IPeopleGeneratorService.of.get()
+                                            .stream().distinct()
+                                            .count();
 
+    //creates a unique list of data!
     Set<Person> data = IPeopleGeneratorService.of.get()
                                       .stream()
                                       .collect(Collectors.toSet());
