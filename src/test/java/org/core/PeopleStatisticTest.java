@@ -3,7 +3,9 @@ package org.core;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
+import java.util.Map;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 public class PeopleStatisticTest {
 
@@ -44,7 +46,38 @@ public class PeopleStatisticTest {
                 .reduce(Integer::sum)
                 .orElse(-1);
 
-    //Todo: min, max, mode, median, μ, σ,
+    //Todo: min, max, mode, median, μ, σ, groupByGender, histogramByAge
 
+
+    /*
+    gender   count
+    FEMALE | 2
+      MALE | 2
+     */
+    @Test
+    void groupByGenderAndSize() {
+        groupByGender.get()
+                .forEach((gender, people) -> System.out.printf("%6s | %d\n", gender, people.size()));
+
+    }
+    public static Supplier<Map<GENDER, List<Person>>> groupByGender =
+            () -> people.parallelStream().distinct()
+                    .collect(Collectors.groupingBy(Person::gender));
+
+    /*
+      FEMALE | x
+      MALE   | y
+     */
+    //Todo: impl. groupBy and counting
+    public static Supplier<Map<GENDER, Integer>> groupByGenderAndCount = () -> { return null; };
+
+    /*
+    FEMALE | PersonX
+    FEMALE | PersonY
+    MALE   | PersonK...
+     */
+    public static Supplier<Map<GENDER, Person>> mapByGender =
+            () -> people.parallelStream().distinct()
+                    .collect(Collectors.toMap(Person::gender, person -> person));
 
 }
