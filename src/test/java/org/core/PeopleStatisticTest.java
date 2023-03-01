@@ -25,7 +25,7 @@ public class PeopleStatisticTest {
     }
 
     @Test
-    void averageOfAge(){
+    void meanOfAge(){
         //Todo: make better exception handling
         Supplier<IllegalArgumentException> missingAgeException = () -> new IllegalArgumentException("age missing!");
 
@@ -39,6 +39,7 @@ public class PeopleStatisticTest {
         System.out.printf("Age of Σ=%d | size=%d | average=%f\n", total, count, (double)(total/CAPACITY));
 
     }
+    //Todo: min, max, mode, median, μ, σ,
 
 
 }
