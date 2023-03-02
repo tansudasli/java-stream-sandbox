@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
@@ -60,16 +61,28 @@ public class PeopleStatisticTest {
                 .forEach((gender, people) -> System.out.printf("%6s | %d\n", gender, people.size()));
 
     }
+
+    /*
+    FEMALE | List<Person>
+      MALE | List<Person>
+     */
     public static Supplier<Map<GENDER, List<Person>>> groupByGender =
             () -> people.parallelStream().distinct()
                     .collect(Collectors.groupingBy(Person::gender));
 
+    @Test
+    void groupByGenderAndCount() {
+        groupByGenderAndCount.get()
+                .forEach((gender, count) -> System.out.println(gender + " | " + count));
+    }
     /*
       FEMALE | x
       MALE   | y
      */
     //Todo: impl. groupBy and counting
-    public static Supplier<Map<GENDER, Integer>> groupByGenderAndCount = () -> { return null; };
+    public static Supplier<Map<GENDER, Long>> groupByGenderAndCount =
+            () -> people.parallelStream().distinct()
+                    .collect(Collectors.groupingBy(Person::gender, Collectors.counting()));
 
     /*
     FEMALE | PersonX
