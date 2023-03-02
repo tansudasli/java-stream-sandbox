@@ -75,6 +75,7 @@ public class PeopleStatisticTest {
         groupByGenderAndCount.get()
                 .forEach((gender, count) -> System.out.println(gender + " | " + count));
     }
+
     /*
       FEMALE | x
       MALE   | y
