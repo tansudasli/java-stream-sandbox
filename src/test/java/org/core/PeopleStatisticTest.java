@@ -80,7 +80,6 @@ public class PeopleStatisticTest {
       FEMALE | x
       MALE   | y
      */
-    //Todo: impl. groupBy and counting
     public static Supplier<Map<GENDER, Long>> groupByGenderAndCount =
             () -> people.parallelStream().distinct()
                     .collect(Collectors.groupingBy(Person::gender, Collectors.counting()));
