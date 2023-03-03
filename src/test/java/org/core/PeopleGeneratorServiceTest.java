@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -30,16 +31,36 @@ class PeopleGeneratorServiceTest {
     }
 
     @Test
-    void printPhones() {
-
-//flatmap Stream<Stream<T>>
-        people.stream()
-                .flatMap((person -> person.phones().stream()))
-                .forEach(System.out::println);
-
+    void print() {
         people.stream()
                 .forEach(System.out::println);
     }
+
+    /*
+    if List<...>, access all values using flatMap(x -> x.stream)
+
+    flatmap Stream<Stream<T>>
+     */
+    @Test
+    void printPhones() {
+
+        people.stream()
+                .flatMap(person -> person.phones().stream())
+                .forEach(System.out::println);
+    }
+
+    @Test
+    void concatNameAndLastName() {
+        System.out.println(concatNameAndLastName.get());
+    }
+
+    /*
+    alixyzveliklmabidinvyz
+     */
+    private final Supplier<String> concatNameAndLastName =
+            () -> people.stream()
+                    .map(person -> person.firstName().toLowerCase() + person.lastname().toLowerCase())
+                    .collect(Collectors.joining(""));
 
 
 }
