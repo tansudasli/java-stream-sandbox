@@ -67,7 +67,7 @@ public interface IPeople {
     */
     Supplier<Map.Entry<Integer, Long>> modeOfAge =
             () -> peopleGroupByAge.get().entrySet()
-                    .stream()        //Stream<Entry<Integer k, Long v>>
+                    .stream()
                     .max(Comparator.comparingLong(Map.Entry::getValue))
                     .orElseThrow();
 
