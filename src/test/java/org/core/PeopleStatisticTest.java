@@ -19,7 +19,6 @@ public class PeopleStatisticTest {
                                  Integer::sum));      // (u, u) -> u + u and returns u
     }
 
-
     //uses hashCode() and equals() which by default counts all fields!
     //stream.distinct() or get Set<Person> to distinct
     public static Supplier<Integer> sumOfAge =
@@ -57,21 +56,6 @@ public class PeopleStatisticTest {
                 .forEach((age, count) -> System.out.println(age + " | " + count));
     }
 
-
-    //Todo: min/mode/max/mean of age calculations
-
-
-//    public static Supplier<Integer> modeOfAge =
-//            () -> groupByAgeAndCount.get()
-//                    .entrySet()
-//                    .stream()
-//                    .map(Map.Entry::getValue)
-//                    .max(Comparator.naturalOrder() )
-//                    .orElse(Long.getLong("-1"))
-//                    .intValue();
-
-
-
     @Test
     void modeOfAge() {
         System.out.println(IPeople.modeOfAge.get().getKey() + " | " + IPeople.modeOfAge.get().getValue());
@@ -87,5 +71,9 @@ public class PeopleStatisticTest {
     @Test
     void meanOfAge() {
         System.out.println(IPeople.meanOfAge.get());
+    }
+    @Test
+    void medianOfAge() {
+        System.out.println(IPeople.medianOfAge.get());
     }
 }

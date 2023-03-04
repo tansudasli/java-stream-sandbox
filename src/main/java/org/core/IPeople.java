@@ -108,8 +108,32 @@ public interface IPeople {
    personY |  40    | ..Z    |   ..Z
    personZ |  35    | ..Y    |
      */
-    Supplier<Integer> medianOfAge =
-            () -> { return 0; };
+    double SIZE = people.stream().distinct().count();
+    int INDEX = SIZE % 2 == 0 ? (int)SIZE / 2 - 1 : (int) Math.round( SIZE / 2.0) - 1;
+
+    //if SIZE is even, two numbers must be averaged!
+    Supplier<Double> medianOfAge =
+            () ->
+             switch ((int) (SIZE % 2)) {
+        //SIZE is even, two numbers must be averaged
+                case 0 -> people.stream()
+                        .distinct()
+                        .sorted(Comparator.comparingInt(Person::age))
+                        .toList()
+                        .subList(INDEX, INDEX + 2)
+                        .stream()
+                        .collect(Collectors.averagingDouble(Person::age));
+        //SIZE is odd. get one number
+                default -> people.stream()
+                        .distinct()
+                        .sorted(Comparator.comparingInt(Person::age))
+                        .toList()
+                        .get(INDEX)
+                        .age()
+                        .doubleValue();
+             };
+
+
 
 
 }
