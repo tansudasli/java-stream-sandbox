@@ -85,14 +85,29 @@ public interface IPeople {
 //    };
 
     Supplier<Integer> minOfAge =
-            () -> { return 0; };
+            () -> people.stream()
+                    .min(Comparator.comparingInt(Person::age))
+                    .orElseThrow()
+                    .age();
 
     Supplier<Integer> maxOfAge =
-            () -> { return 0; };
+            () -> people.stream()
+                    .max(Comparator.comparingInt(person -> person.age()))
+                    .orElseThrow()
+                    .age();
 
-    Supplier<Integer> meanOfAge =
-            () -> { return 0; };
+    Supplier<Double> meanOfAge =
+            () -> people.stream()
+                    .distinct()
+                    .collect(Collectors.averagingDouble(Person::age));
 
+    /*
+
+   person    age     sort      middle
+   personX |  30    | ..X    |
+   personY |  40    | ..Z    |   ..Z
+   personZ |  35    | ..Y    |
+     */
     Supplier<Integer> medianOfAge =
             () -> { return 0; };
 

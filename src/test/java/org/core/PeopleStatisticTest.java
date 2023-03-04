@@ -6,12 +6,6 @@ import java.util.function.Supplier;
 
 public class PeopleStatisticTest {
 
-    private static final Integer CAPACITY = IPeopleGeneratorService.of.get().size();
-    private static final long SIZE = IPeopleGeneratorService.of.get()
-                                                .stream().distinct()
-                                                .count();
-
-
     @Test
     void sumOfAge(){
 
@@ -25,15 +19,6 @@ public class PeopleStatisticTest {
                                  Integer::sum));      // (u, u) -> u + u and returns u
     }
 
-    @Test
-    void meanOfAge(){
-        //Todo: make better exception handling
-//        Supplier<IllegalArgumentException> missingAgeException = () -> new IllegalArgumentException("age missing!");
-
-        System.out.printf("Size=%d | Capacity=%d\n", SIZE, CAPACITY);
-        System.out.printf("Age of Σ=%d | size=%d | average=%f\n", sumOfAge.get(), SIZE, (double)(sumOfAge.get()/CAPACITY));
-
-    }
 
     //uses hashCode() and equals() which by default counts all fields!
     //stream.distinct() or get Set<Person> to distinct
@@ -90,5 +75,17 @@ public class PeopleStatisticTest {
     @Test
     void modeOfAge() {
         System.out.println(IPeople.modeOfAge.get().getKey() + " | " + IPeople.modeOfAge.get().getValue());
+    }
+    @Test
+    void minOfAge() {
+        System.out.println(IPeople.minOfAge.get());
+    }
+    @Test
+    void maxOfAge() {
+        System.out.println(IPeople.maxOfAge.get());
+    }
+    @Test
+    void meanOfAge() {
+        System.out.println(IPeople.meanOfAge.get());
     }
 }
