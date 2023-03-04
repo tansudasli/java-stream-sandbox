@@ -1,5 +1,6 @@
 package org.core;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.function.BiFunction;
@@ -29,7 +30,7 @@ public interface IPeople {
                     .parallelStream().distinct()
                     .collect(Collectors.groupingBy(Person::gender, Collectors.counting()));
 
-    /*if age is not unique, map fails ! but groupBy works .)
+    /*if age is not unique, map fails ! but groupBy works
       age       count
       30     |   2
       35     |   1
@@ -56,18 +57,32 @@ public interface IPeople {
                     .map(person -> scaleAge.apply(person.age(), scale))
                     .collect(Collectors.groupingBy(age -> age, Collectors.counting()));
 
-    //Todo: old style, leverage streams!
-    Supplier<Map.Entry<Integer, Long>> modeOfAge = () -> {
-        Map.Entry<Integer, Long> maxOccuring = null;
 
-        for ( Map.Entry<Integer, Long> entry : peopleGroupByAge.get().entrySet() ) {
-            if (maxOccuring == null) maxOccuring = entry;
+    /*
+       Map<age, count>  - find max
+      age       count    mode
+      30     |   2     |
+      35     |   1     |
+      40     |   3     |  x
+    */
+    Supplier<Map.Entry<Integer, Long>> modeOfAge =
+            () -> peopleGroupByAge.get().entrySet()
+                    .stream()        //Stream<Entry<Integer k, Long v>>
+                    .max(Comparator.comparingLong(Map.Entry::getValue))
+                    .orElseThrow();
 
-            maxOccuring = maxOccuring.getValue() > entry.getValue() ? maxOccuring : entry;
-        }
-
-        return maxOccuring;
-    };
+//    old style
+//    Supplier<Map.Entry<Integer, Long>> modeOfAge = () -> {
+//        Map.Entry<Integer, Long> maxOccurring = null;
+//
+//        for ( Map.Entry<Integer, Long> entry : peopleGroupByAge.get().entrySet() ) {
+//            if (maxOccurring == null) maxOccurring = entry;
+//
+//            maxOccurring = maxOccurring.getValue() > entry.getValue() ? maxOccurring : entry;
+//        }
+//
+//        return maxOccurring;
+//    };
 
     Supplier<Integer> minOfAge =
             () -> { return 0; };
