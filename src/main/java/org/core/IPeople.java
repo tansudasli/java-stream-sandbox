@@ -16,7 +16,7 @@ public interface IPeople {
       MALE   | List<Person>
     */
     Supplier<Map<GENDER, List<Person>>> peopleListGroupByGender =
-            () -> IPeople.people
+            () -> people
                     .parallelStream().distinct()
                     .collect(Collectors.groupingBy(Person::gender));
 
@@ -25,7 +25,7 @@ public interface IPeople {
       MALE   | y
     */
     Supplier<Map<GENDER, Long>> peopleGroupByGender =
-            () -> IPeople.people
+            () -> people
                     .parallelStream().distinct()
                     .collect(Collectors.groupingBy(Person::gender, Collectors.counting()));
 
@@ -36,7 +36,7 @@ public interface IPeople {
       40     |   3
     */
     Supplier<Map<Integer, Long>> peopleGroupByAge =
-            () -> IPeople.people
+            () -> people
                     .parallelStream()
                     .collect(Collectors.groupingBy(Person::age, Collectors.counting()));
 
@@ -51,17 +51,20 @@ public interface IPeople {
       40..49   |  40      |  z         [40, 50)
      */
     Function<Integer, Map<Integer, Long>> histogramOfAge =
-            (scale) -> IPeople.people
+            (scale) -> people
                     .parallelStream()
                     .map(person -> scaleAge.apply(person.age(), scale))
                     .collect(Collectors.groupingBy(age -> age, Collectors.counting()));
 
     //Todo: old style, leverage streams!
     Supplier<Map.Entry<Integer, Long>> modeOfAge = () -> {
-        Map.Entry<Integer, Long> maxOccuring = IPeople.peopleGroupByAge.get().entrySet().stream().findFirst().orElseThrow();
+        Map.Entry<Integer, Long> maxOccuring = null;
 
-        for ( Map.Entry<Integer, Long> entry : IPeople.peopleGroupByAge.get().entrySet() )
-            maxOccuring =  maxOccuring.getValue() > entry.getValue() ? maxOccuring : entry;
+        for ( Map.Entry<Integer, Long> entry : peopleGroupByAge.get().entrySet() ) {
+            if (maxOccuring == null) maxOccuring = entry;
+
+            maxOccuring = maxOccuring.getValue() > entry.getValue() ? maxOccuring : entry;
+        }
 
         return maxOccuring;
     };
