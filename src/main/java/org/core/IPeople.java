@@ -92,7 +92,9 @@ public interface IPeople {
 
     Supplier<Integer> maxOfAge =
             () -> people.stream()
-                    .max(Comparator.comparingInt(person -> person.age()))
+//                    .max((p1, p2) -> p1.age() - p2.age())           //the expected way
+                    .max(Comparator.comparingInt(Person::age))
+//                    .max(Comparator.naturalOrder())                 //not applicable for this case
                     .orElseThrow()
                     .age();
 
