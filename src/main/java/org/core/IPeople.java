@@ -12,6 +12,15 @@ public interface IPeople {
 
     List<Person> people = IPeopleGeneratorService.of.get();
 
+    //Todo: experience Runnable sort method
+    Runnable peopleSortedByAge =
+            () ->  people.sort(Comparator.comparingInt(Person::age));
+
+    Supplier<List<Person>> peopleSortedByAge2 = () ->  people.stream()
+                    .sorted(Comparator.comparingInt(Person::age))
+                    .toList();
+
+
     /*
       FEMALE | List<Person>
       MALE   | List<Person>
@@ -90,13 +99,23 @@ public interface IPeople {
                     .orElseThrow()
                     .age();
 
+    /*
+    finding max in 3 ways
+
+    1- .max((p1, p2) -> p1.age() - p2.age())
+    2- .max(Comparator.comparingInt(Person::age))
+    3- .map(Person::age)
+       .max(Comparator.naturalOrder())
+     */
     Supplier<Integer> maxOfAge =
             () -> people.stream()
 //                    .max((p1, p2) -> p1.age() - p2.age())           //the expected way
-                    .max(Comparator.comparingInt(Person::age))
-//                    .max(Comparator.naturalOrder())                 //not applicable for this case
+//                    .max(Comparator.comparingInt(Person::age))
+                    .map(Person::age)
+                    .max(Comparator.naturalOrder())                 //expects T, so we need map() for this case
                     .orElseThrow()
-                    .age();
+//                    .age()
+            ;
 
     Supplier<Double> meanOfAge =
             () -> people.stream()

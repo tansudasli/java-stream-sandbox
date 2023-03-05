@@ -4,6 +4,8 @@ import org.junit.jupiter.api.Test;
 
 
 import java.util.*;
+import java.util.function.Supplier;
+import java.util.stream.Stream;
 
 public class PeopleSortTest {
 
@@ -32,24 +34,36 @@ public class PeopleSortTest {
         //default stream.sorted() method waited People class must implement Comparable/Comparator interface.!
         //otherwise comparable cast error occurs
 
-        people.stream()
-                .sorted(Comparator.comparingInt(Person::age))
-//                .sorted(((person, t1) -> person.age() - t1.age()))
+        /*
+        sorting in 3 ways
+        1- classical way,
+           .sorted((person, t1) -> person.age() - t1.age())
+        2- sorted(Comparator.comparingInt(Person::age)
+        3- map(p -> p.age) then sorted()
+
+        and 4th way is inplace-sorting
+        people.sort(...) is also possible in 3 ways!!
+         */
+        peopleSortedByAgeStream3
+                .get()
                 .forEach(System.out::println);
-
-//        assertEquals(people.stream()
-//                .sorted(((person, t1) -> person.age() - t1.age()))
-//                .findFirst()
-//                .orElseThrow()
-//                .age(), minAge);
-
-        //not possible due to immutable people list :0
-//        people.sort((Comparator.comparingInt(Person::age)));
-
     }
+    public Supplier<Stream<Integer>> peopleSortedByAgeStream3 =
+            () ->  people.stream()
+                    .map(Person::age)
+                    .sorted();
+
+    public Supplier<Stream<Person>> peopleSortedByAgeStream2 =
+            () ->  people.stream().sorted(Comparator.comparingInt(Person::age));
+
+    public Supplier<Stream<Person>> peopleSortedByAgeStream1 =
+            () ->  people.stream().sorted((person, t1) -> person.age() - t1.age());
+
+    //inplace sorting
+    public Runnable peopleSortedByAge = () ->  people.sort(Comparator.comparingInt(Person::age));
 
     @Test
-    void sortReverseByID() {
+    void sortedByIDReverse() {
         //just reverse target and first object
         people.stream()
                 .sorted((person, t1) -> t1.id() - person.id())
