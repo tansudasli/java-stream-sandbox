@@ -39,7 +39,7 @@ public class PeopleSortTest {
     }
 
     @Test
-    void sortWithRunnable() throws InterruptedException {
+    void mutablePeopleSortInPlaceWithRunnable() throws InterruptedException {
         System.out.println("begin::: ".concat(Thread.currentThread().getName()));
 
         //Todo: leverage CompletableFuture, better thread management
