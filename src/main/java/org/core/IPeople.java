@@ -25,7 +25,7 @@ public interface IPeople {
       FEMALE | List<Person>
       MALE   | List<Person>
     */
-    Supplier<Map<GENDER, List<Person>>> peopleListGroupByGender =
+    Supplier<Map<Gender, List<Person>>> peopleListGroupByGender =
             () -> people
                     .parallelStream().distinct()
                     .collect(Collectors.groupingBy(Person::gender));
@@ -34,7 +34,7 @@ public interface IPeople {
       FEMALE | x
       MALE   | y
     */
-    Supplier<Map<GENDER, Long>> peopleGroupByGender =
+    Supplier<Map<Gender, Long>> peopleGroupByGender =
             () -> people
                     .parallelStream().distinct()
                     .collect(Collectors.groupingBy(Person::gender, Collectors.counting()));

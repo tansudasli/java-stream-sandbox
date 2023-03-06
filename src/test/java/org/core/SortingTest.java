@@ -14,8 +14,8 @@ public class SortingTest {
         //every data pieces must be same!!
         System.out.println(IPeople.people.get(0));
 
-        System.out.println(IPeople.people.get(0).equals(new Person(1, "James", "Williams", "James@hotmail.com", GENDER.MALE, 44, Arrays.asList("1-857-545-5925", "1-894-887-1309"))));
-        System.out.println(IPeople.people.get(0).equals(new Person(1, null, "Williams", "James@hotmail.com", GENDER.MALE, 44, Arrays.asList("1-857-545-5925", "1-894-887-1309"))));
+        System.out.println(IPeople.people.get(0).equals(new Person(1, "James", "Williams", "James@hotmail.com", Gender.MALE, 44, Arrays.asList("1-857-545-5925", "1-894-887-1309"))));
+        System.out.println(IPeople.people.get(0).equals(new Person(1, null, "Williams", "James@hotmail.com", Gender.MALE, 44, Arrays.asList("1-857-545-5925", "1-894-887-1309"))));
     }
 
     @Test
