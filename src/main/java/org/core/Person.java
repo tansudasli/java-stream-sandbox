@@ -23,6 +23,8 @@ public record Person(Integer id, String firstName, String lastname, String email
 
     @Override
     public boolean equals(Object o) {
+        if (!o.getClass().getName().contains("Person")) return false;
+
         return id.equals(((Person)o).id);
     }
 
