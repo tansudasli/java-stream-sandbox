@@ -40,4 +40,6 @@ public class StreamsInDeepTest {
                                  ArrayList::add,
                                  ArrayList::addAll);
             };
+
+    //Todo: Collectors in detail
 }
