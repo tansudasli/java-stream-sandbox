@@ -37,12 +37,19 @@ public class PeopleSortTest {
         IPeopleSorted.peopleSortedByAgeThenGenderStream.get()
                 .forEach(System.out::println);
     }
-    @Test
-    void sortedByIDReverse() {
-        //just reverse target and first object
-        IPeople.people.stream()
-                .sorted((person, t1) -> t1.id() - person.id())
-                .forEach(System.out::println);
-    }
 
+    @Test
+    void sortWithRunnable() throws InterruptedException {
+        System.out.println("begin::: ".concat(Thread.currentThread().getName()));
+
+        //Todo: leverage CompletableFuture, better thread management
+
+        new Thread(IPeopleSorted.peopleSortedByAge).start();  //inplace sorted
+
+        Thread.sleep(1000);
+
+        IPeopleGeneratorService.dataMutable.forEach(System.out::println);
+
+        System.out.println("end::: ".concat(Thread.currentThread().getName()));
+    }
 }

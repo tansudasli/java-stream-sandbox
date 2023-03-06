@@ -47,5 +47,10 @@ public interface IPeopleSorted {
      inplace sorting, and it is void!
      so Runnable interface is appropriate, as functional interface!
      */
-    Runnable peopleSortedByAge = () ->  IPeople.people.sort(Comparator.comparingInt(Person::age));
+    Runnable peopleSortedByAge = () ->  {
+        System.out.println("peopleSortedByAge::: ".concat(Thread.currentThread().getName()));
+
+        IPeopleGeneratorService.dataMutable.sort(Comparator.comparingInt(Person::age));
+    };
+
 }
