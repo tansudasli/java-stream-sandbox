@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.function.Predicate;
 
-public class PeopleFilterTest {
+public class FilteringTest {
 
     @Test
     void queryByAgeGreaterThan20() {

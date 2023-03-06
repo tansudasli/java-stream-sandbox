@@ -117,6 +117,10 @@ public interface IPeople {
 //                    .age()
             ;
 
+    /* 2 way is possible..
+      1- person -> .mapToDouble(person::age) -> .average()
+      2- using Collectors..
+     */
     Supplier<Double> meanOfAge =
             () -> people.stream()
                     .distinct()
@@ -134,8 +138,7 @@ public interface IPeople {
 
     //if SIZE is even, two numbers must be averaged!
     Supplier<Double> medianOfAge =
-            () ->
-             switch ((int) (SIZE % 2)) {
+            () -> switch ((int) (SIZE % 2)) {
         //SIZE is even, two numbers must be averaged
                 case 0 -> people.stream()
                         .distinct()
@@ -153,8 +156,6 @@ public interface IPeople {
                         .age()
                         .doubleValue();
              };
-
-
 
 
 }

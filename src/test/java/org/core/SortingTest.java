@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.*;
 
-public class PeopleSortTest {
+public class SortingTest {
 
 
     @Test

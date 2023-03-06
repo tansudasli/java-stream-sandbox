@@ -27,7 +27,7 @@ public class SumOfAgeBenchmarkTest {
     @Threads(2)
     @OutputTimeUnit(TimeUnit.MICROSECONDS)
     public void inParallel() {
-        PeopleStatisticTest.sumOfAge.get();
+        StatisticsTest.sumOfAge.get();
     }
 
     @Benchmark

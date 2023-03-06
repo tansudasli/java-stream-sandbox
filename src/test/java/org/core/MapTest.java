@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class PeopleMapTest {
+public class MapTest {
 
     Map<Integer, Person> data = IPeopleGeneratorService.of.get()
                                            .stream().distinct()

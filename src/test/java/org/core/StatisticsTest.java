@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.function.Supplier;
 
-public class PeopleStatisticTest {
+public class StatisticsTest {
 
     @Test
     void sumOfAge(){
