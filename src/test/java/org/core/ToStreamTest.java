@@ -1,6 +1,6 @@
 package org.core;
 
-public class ToStream {
+public class ToStreamTest {
 
     //Todo: stream from file readings
     //Todo: stream from regex

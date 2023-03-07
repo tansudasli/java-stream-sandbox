@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
 
-public class ToStreamDeep {
+public class ToStreamDeepTest {
     //understanding streams
 
     @BeforeEach
