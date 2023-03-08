@@ -12,14 +12,14 @@ public class ToStreamDeepTest {
 
     @BeforeEach
     void before() {
-        System.out.println("start:::".concat(Thread.currentThread().getName()));
+        System.out.println("start::: ".concat(Thread.currentThread().getName()));
     }
 
     @Test
     void test() {
         emailsZ.get()
                 .forEach(s -> {
-                    System.out.println("forEach:::"
+                    System.out.println("forEach::: "
                                        .concat(Thread.currentThread().getName())
                                        .concat("::: ")
                                        .concat(s));
@@ -27,19 +27,51 @@ public class ToStreamDeepTest {
                 });
     }
 
-    Supplier<List<String>> emailsZ =
-            () -> { return
-                IPeople.people
-                        .parallelStream()
-                        .map(person -> {
-                            System.out.println("map:::".concat(Thread.currentThread().getName()));
+    /* Understanding thread allocations of parallelStream
+     - not parallel, same thread, gets a person then completes all steps.
 
-                            return person.email();
-                        })
-                        .collect(ArrayList::new,
-                                 ArrayList::add,
-                                 ArrayList::addAll);
-            };
+       collect::new runs 1 times
+
+       person 1 map -> collect::add
+       person 2 map -> collect::add
+
+       @last step, foreach steps
+
+     - parallel, leverages multi threads, and all steps can be happen
+
+       collect::new -> collect::map -> collect::new -> collect::map -> collect::add .....
+
+       @last step, foreach steps
+
+     */
+    Supplier<List<String>> emailsZ =
+            () -> IPeople.people
+                    .stream()
+                    .parallel()
+                    .map(person -> {
+                        System.out.println("map::: ".concat(Thread.currentThread().getName()));
+
+                        return person.email();
+                    })
+                    .collect(() -> {
+                                System.out.println("collect:::new ".concat(Thread.currentThread().getName()));
+
+                                return new ArrayList<>();
+                             }, //ArrayList::new
+                             (list, email) -> {
+                                System.out.println("collect:::add ".concat(Thread.currentThread().getName())
+                                                                   .concat(" ::: " + email));
+
+                                list.add(email);
+                             },   //ArrayList::add
+                             ArrayList::addAll
+                    );
+
+    //short form, of emailZ
+//    Supplier<List<String>> emailsZZ = () -> IPeople.people
+//                                                .parallelStream()
+//                                                .map(Person::email)
+//                                                .collect(ArrayList::new, ArrayList::add, ArrayList::addAll);
 
     //Todo: Collectors in detail
 }
