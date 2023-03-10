@@ -26,5 +26,7 @@ public interface IPeopleGeneratorService {
 
     Supplier<List<Person>> of = () -> data;
 
+    //Todo: read people.txt file & construct People objects + maybe a prototype pattern ?
+
 
 }
