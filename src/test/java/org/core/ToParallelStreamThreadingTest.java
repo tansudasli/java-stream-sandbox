@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
 
-public class ToStreamDeepTest {
+public class ToParallelStreamThreadingTest {
     //understanding streams
 
     @BeforeEach
@@ -49,6 +49,7 @@ public class ToStreamDeepTest {
                     .stream()
                     .parallel()
                     .map(person -> {
+                        //Todo: make it async :) What happens
                         System.out.println("map::: ".concat(Thread.currentThread().getName()));
 
                         return person.email();
