@@ -13,7 +13,13 @@ enum Gender { MALE, FEMALE };
  * implements interfaces
  * compact constructor is possible, if you need some validations etc...
  */
-public record Person(Integer id, String firstName, String lastname, String email, Gender gender, Integer age, List<String> phones) {
+public record Person(Integer id,
+                     String firstName,
+                     String lastname,
+                     String email,
+                     Gender gender,
+                     Integer age,
+                     List<String> phones) {
 
     //compact constructor
     public Person {
