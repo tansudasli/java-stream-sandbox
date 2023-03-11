@@ -1,6 +1,6 @@
 package org.core.concurrency;
 
-import org.core.IPeople;
+import org.core.IPeopleGeneratorService;
 import org.core.Person;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -19,9 +19,21 @@ public class StreamThreadingTest {
 
     @Test
     void test() {
-        emailsZ.accept(IPeople.people);
+        emailsZ.accept(IPeopleGeneratorService.data);
     }
 
+    /*
+    1 thread
+
+    1 time
+       collect:::new
+
+    N times
+       map:::  ->  collect:::add
+
+    N times
+       forEach:::
+     */
     Consumer<List<Person>> emailsZ =
             (people) -> people.stream()
                     .map(person -> {
