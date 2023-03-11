@@ -1,7 +1,13 @@
 package org.core;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.*;
+import java.util.function.Function;
 import java.util.function.Supplier;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 public interface IPeopleGeneratorService {
 
@@ -24,9 +30,37 @@ public interface IPeopleGeneratorService {
             new Person(454,"Camilla","Contreras","camilla@aol.net", Gender.FEMALE,19,Arrays.asList("1-636-524-5164","1-662-329-2646"))
     );
 
-    Supplier<List<Person>> of = () -> data;
+    Function<String, Person> toPerson = (line) -> {
 
-    //Todo: read people.txt file & construct People objects + maybe a prototype pattern ?
+        //id,name,lastName,email,gender,age,phone,phone1
+        return Pattern.compile("(^\\d+),([\\w]+),([\\w|']+),(.+@.+),(M.+|F.+),([\\d|-]+),([\\d|-]+),(.+$)")
+                .matcher(line)
+                .results()
+                .map(match -> new Person(Integer.valueOf(match.group(1)),
+                                         match.group(2),
+                                         match.group(3),
+                                         match.group(4),
+                                         match.group(5).equals("Male") ? Gender.MALE : Gender.FEMALE,
+                                         Integer.valueOf(match.group(6)),
+                                         Arrays.asList(match.group(7), match.group(8))))
+                .findFirst()
+                .orElseThrow();
+
+    };
+
+    int FIRST_LINE_IS_HEADER = 1;
+    String PATH_OF_PEOPLE_TXT = "/Users/tansudasli/coding/java-stream-sandbox/src/main/resources/people.txt";
+
+    Supplier<List<Person>> of = () -> {
+        try {
+            return Files.lines(Path.of(PATH_OF_PEOPLE_TXT))
+                    .skip(FIRST_LINE_IS_HEADER)
+                    .map(toPerson)
+                    .collect(Collectors.toList());
+
+        } catch (IOException e) { throw new RuntimeException(e); }
+    };
+
 
 
 }
