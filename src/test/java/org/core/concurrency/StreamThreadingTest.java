@@ -29,9 +29,10 @@ public class StreamThreadingTest {
        collect:::new
 
     N times
-       map:::  ->  collect:::add
+              sequentially
+       map:::      ->      collect:::add
 
-    N times
+    N times, last step. sequential
        forEach:::
      */
     Consumer<List<Person>> emailsZ =

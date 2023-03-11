@@ -32,8 +32,10 @@ public interface IPeopleGeneratorService {
 
     Function<String, Person> toPerson = (line) -> {
 
-        //id,name,lastName,email,gender,age,phone,phone1
-        return Pattern.compile("(^\\d+),([\\w]+),([\\w|']+),(.+@.+),(M.+|F.+),([\\d|-]+),([\\d|-]+),(.+$)")
+        String regex = "(^\\d+),([\\w]+),([\\w|']+),(.+@.+),(M.+|F.+),([\\d|-]+),([\\d|-]+),(.+$)";
+                     //  id,    name,    lastName,  email,  gender,   age,       phone,     phone1
+
+        return Pattern.compile(regex)
                 .matcher(line)
                 .results()
                 .map(match -> new Person(Integer.valueOf(match.group(1)),
