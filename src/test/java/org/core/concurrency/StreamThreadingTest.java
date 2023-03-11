@@ -9,8 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
-public class ToStreamThreadingTest {
-    //understanding threading in the streams
+public class StreamThreadingTest {
+    //understanding threading in java-streams
 
     @BeforeEach
     void before() {

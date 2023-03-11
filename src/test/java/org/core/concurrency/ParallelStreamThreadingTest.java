@@ -9,8 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
-public class ToParallelStreamThreadingTest {
-    //understanding threading in the parallel-streams
+public class ParallelStreamThreadingTest {
+    //understanding threading in java-streams
 
     @BeforeEach
     void before() {
