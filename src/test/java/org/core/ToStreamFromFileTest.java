@@ -39,7 +39,7 @@ public class ToStreamFromFileTest {
    public static Supplier<Map<String, Long>> wordCount =
            () -> {
                try {
-                   return Files.lines(Paths.get(ToStreamFromFileTest.class.getResource("concordances.txt").toURI())
+                   return Files.lines(Paths.get(ToStreamFromFileTest.class.getResource("/concordances.txt").toURI())
                                    .toAbsolutePath())
                            .flatMap(line -> Pattern.compile("\\w+").matcher(line).results())
                            .collect(Collectors.groupingBy(MatchResult::group, Collectors.counting()));

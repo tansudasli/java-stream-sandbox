@@ -42,6 +42,20 @@ This project is about
 
 </details>
 
+<details>
+<summary>Threading ::: in streams</summary>
+
+- ...
+
+</details>
+
+<details>
+<summary>Threading ::: in parallelStreams</summary>
+
+- ....
+
+</details>
+
 ## how to run
 
 - `./gradlew clean build jar jmhJar`
