@@ -2,11 +2,11 @@
 
 This project is about 
 
-- functional programming
-- streams
+- Stream API
 - parallelStreams
+- Collectors API
 - Optional
-- functional interfaces 
+- Functional interfaces 
 
 ## Stream concepts
 
