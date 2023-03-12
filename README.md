@@ -43,16 +43,44 @@ This project is about
 </details>
 
 <details>
-<summary>Threading ::: in streams</summary>
+<summary>Threading ::: in java-streams</summary>
 
-- ...
+ - if it is not parallel, same thread, sequential (beginning2end), gets a person then completes all-intermediate-steps.
+   And, repeats the same as person and other tasks
+
+    ```
+    1 thread
+
+        1 time  (so no need for combiner)  !! no need combiner (never enters addAll step)
+           collect:::new
+
+        N times
+                  sequentially
+           map:::      ->      collect:::add
+
+        N times, last step. terminal ops. sequential
+           forEach:::
+    ```
 
 </details>
 
 <details>
-<summary>Threading ::: in parallelStreams</summary>
+<summary>Threading ::: in java-parallelStreams</summary>
 
-- ....
+ - If it is parallel, leverages multi-threads, and all intermediate-steps can be happened in any order!.
+ So, combiner is must!.
+
+   ```
+   N thread
+       N times
+           collect::new (no optimization, which is interesting, that's why we need combiner!) -> collect::map
+           -> collect::new  -> collect::new  -> collect::map
+           -> collect::add ......... -> collect::addAll
+           -> collect::new ......
+
+   1 Thread
+        @last step, foreach steps,  (terminal operation), sequential
+   ```
 
 </details>
 
