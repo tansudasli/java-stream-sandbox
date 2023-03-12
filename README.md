@@ -91,7 +91,11 @@ some critical things changes the methods we may see!
 - min vs Collectors.minBy
 - Stream<T> vs Stream<T extends Integer> (clipping to an integer type)
 - IntStream vs Stream<Integer>
-- map vs groupBy
+- Transformation: IntStream -> boxed() -> Stream<Integer>
+- `stream().map()` is the same as `collect(Collectors.toMap()`
+- map (one by one mapping) vs Collectors.groupingBy (One by List mapping, so in downstream you may reduce it T also) 
+- (:Map<T extends Integer, List<T>)
+- if you have Map<k, v>, use `.entrySet().stream()` to do computing
 
 ```
    .stream()
