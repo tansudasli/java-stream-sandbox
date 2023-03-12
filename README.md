@@ -84,6 +84,37 @@ This project is about
 
 </details>
 
+<details>
+<summary>Methods ::: stream API vs Collectors API </summary>
+
+some critical things changes the methods we may see!
+- min vs Collectors.minBy
+- Stream<T> vs Stream<T extends Integer> (clipping to an integer type)
+- IntStream vs Stream<Integer>
+- map vs groupBy
+
+```
+   .stream()
+   .map(::getIntegerTypeSomething)       //Stream<Integer>
+   .min(Comparator.naturalOrder())
+  ---
+   .stream()
+   .map(::getIntegerTypeSomething)        //Stream<Integer>
+   .collect(Collectors.minBy(Comparator.naturalOrder()))
+```
+
+```
+   .stream()
+   .mapToInt(::getIntegerTypeSomething)   //IntStream
+   .summaryStatistics()
+   ---
+   .stream()
+   .collect(Collectors.summarizingInt(::getIntegerTypeSomething))
+```
+
+
+</details>
+
 ## how to run
 
 - `./gradlew clean build jar jmhJar`
