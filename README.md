@@ -40,7 +40,6 @@ Performances
 ```
 
 </details>
-
 <details>
 <summary>Collections API ::: Map</summary>
 
@@ -59,7 +58,6 @@ Performances
 
 ```
 </details>
-
 <details>
 <summary>Get a stream from Regex</summary>
 
@@ -74,14 +72,25 @@ Performances
 
 </details>
 <details>
-<summary> Get a stream from int[] ::: primitives (Arrays.stream)</summary>
+<summary> Get a stream from SecureRandom</summary>
+
+ ```
+ new SecureRandom()
+            .ints(10, 1, 7)                //IntStream
+            .mapToObj(String::valueOf)     //Stream<String>
+            .forEach(System.out::println)
+ ```
+
+</details>
+<details>
+<summary> Get a stream from int[] ::: primitives</summary>
 
 - `IntStream<Integer> xx =  Arrays.stream(int[])`
 - then `.boxed` to get `Stream<Integer>`, if you need!
 
 </details>
 <details>
-<summary> Get a stream from Collections ::: wrappers (.stream)</summary>
+<summary> Get a stream from Collections ::: wrappers</summary>
 
 - `List<Integer> xx = new ArrayList<>(Arrays.asList(1, 3, 4))`
 - `Stream<Integer> yy = xx.stream()`
