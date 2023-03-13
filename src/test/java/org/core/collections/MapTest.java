@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -78,5 +80,24 @@ public class MapTest {
     }
 
 
+    //ConcurrentHashMap<age, List<Person>>
+    ConcurrentHashMap<Integer, List<Person>> personGroupedByAgeConcurrent = new ConcurrentHashMap<>(personGroupedByAge);
 
+    @Test
+    void personGroupedByAgeConcurrent() {
+
+        var entry = personGroupedByAgeConcurrent.entrySet()
+                .stream()
+                .findFirst()
+                .orElseThrow();
+
+        System.out.println("Size of first key=(age of 15) | ".concat(String.valueOf(entry.getValue().size())));
+
+        System.out.println(entry.getValue()
+                                .stream()
+                                .map(Person::firstName)
+                                .collect(Collectors.joining(", ")));
+
+
+    }
 }
