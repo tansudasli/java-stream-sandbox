@@ -13,18 +13,9 @@ class PeopleGeneratorServiceTest {
 
 
     @Test
-    @DisplayName("Test employee count == 4")
+    @DisplayName("Test employee count == 5k+")
     void checkPeopleCount() {
-        assertEquals(5, IPeople.people.size());
-    }
-
-    @Test
-    @DisplayName("Test 1st employee is Ali")
-    void checkFirstPeople() {
-        assertEquals("James", IPeople.people.stream()
-                                            .findFirst()
-                                            .get()
-                                            .firstName());
+        assertEquals(8000, IPeople.people.size());
     }
 
     @Test

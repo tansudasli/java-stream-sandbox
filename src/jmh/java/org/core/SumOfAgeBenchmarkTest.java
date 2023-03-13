@@ -40,6 +40,12 @@ public class SumOfAgeBenchmarkTest {
         totalSequentially.apply(IPeopleGeneratorService.of.get());
     }
 
+    /* to run,
+
+     - ./gradlew   clean build jar jmhJar
+     - java -cp build/libs/java-stream-sandbox-1.0-SNAPSHOT-jmh.jar org.core.SumOfAgeBenchmarkTest
+
+     */
     public static void main(String[] args) throws RunnerException {
 
         /* jmh multi threading
@@ -56,8 +62,6 @@ public class SumOfAgeBenchmarkTest {
                 .warmupIterations(1)
                 .measurementIterations(1)
                 .forks(1)
-//                .resultFormat(ResultFormatType.JSON)
-//                .result("build/".concat(org.core.SumOfAgeBenchmarkTest.class.getName()).concat(".json"))
                 .build() ;
 
         new Runner(opt).run() ;
@@ -65,4 +69,14 @@ public class SumOfAgeBenchmarkTest {
         System.out.println("..." + Thread.currentThread());
 
     }
+
+    //people size = 5k
+//    Benchmark                           Mode  Cnt      Score   Error  Units
+//    SumOfAgeBenchmarkTest.inParallel    avgt         978.995          us/op
+//    SumOfAgeBenchmarkTest.inSequential  avgt       27810.961          us/op
+
+    //people size = 8k
+//    Benchmark                           Mode  Cnt      Score   Error  Units
+//    SumOfAgeBenchmarkTest.inParallel    avgt        6324.333          us/op
+//    SumOfAgeBenchmarkTest.inSequential  avgt       52963.479          us/op
 }
