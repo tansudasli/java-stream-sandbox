@@ -4,6 +4,7 @@ import org.core.IPeopleGeneratorService;
 import org.core.Person;
 import org.junit.jupiter.api.Test;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -27,9 +28,11 @@ public class MapTest {
 
                use .entrySet().stream() for streaming
 
-      - Map<k, v>, unsorted, no-null-key,            ..... one key = one value
-      - HashMap, unsorted, null-key                  ..... one key = N values
-      - ConcurrentHashMap, no-null-key, trade-safe   ..... one key = N values !
+     Map means, one key = one value, But if you put a List<V>, you can hold many values for one key!
+
+      - Map<k, v>, unsorted, no-null-key,no-duplicate-key            ..... one key = one value
+      - HashMap, unsorted, null-key, no-duplicate-key                ..... one key = N values if List<V>
+      - ConcurrentHashMap, no-null-key, trade-safe                   ..... one key = N values !
       - TreeMap,sorted (natural order)
         detail: always compareTo last node, then if greater puts right, otherwise left side.
 
@@ -88,6 +91,7 @@ public class MapTest {
 
     //ConcurrentHashMap<age, List<Person>>
     ConcurrentHashMap<Integer, List<Person>> personGroupedByAgeConcurrent = new ConcurrentHashMap<>(personGroupedByAge);
+    HashMap<Integer, List<Person>> personGroupedByAgeHashed = new HashMap<>(personGroupedByAge);
 
     @Test
     void personGroupedByAgeConcurrent() {
@@ -103,6 +107,32 @@ public class MapTest {
                                 .stream()
                                 .map(Person::firstName)
                                 .collect(Collectors.joining(", ")));
+
+
+    }
+
+    /*
+    HashMap<Integer, String> works different from HashMap<Integer, List<Person>>
+
+    1st adds k=v
+    2nd adds k=list of v ... so has many pointers, in fact
+
+    we may have delusion that more keys added :)
+     */
+    @Test
+    void personGroupedByAgeHashed() {
+
+        var entry = personGroupedByAgeHashed.entrySet()
+                .stream()
+                .findFirst()
+                .orElseThrow();
+
+        System.out.println("Size of first key=(age of 15) | ".concat(String.valueOf(entry.getValue().size())));
+
+        System.out.println(entry.getValue()
+                .stream()
+                .map(Person::firstName)
+                .collect(Collectors.joining(", ")));
 
 
     }

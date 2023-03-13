@@ -29,6 +29,7 @@ This project is about
 <details>
 <summary>Collections API ::: Map</summary>
 
+- Map means, _one key = one value_, But if you put a `List<V>`, you can hold **many values for one key**
 - default initial bucket = 16, load factor 0.75
 - if (size = lf * initial) -> resize *= 2
 - use .entrySet().stream() for streaming
@@ -36,8 +37,8 @@ This project is about
 ```
 
   - Map<k, v>, unsorted, no-null-key,            ..... one key = one value
-  - HashMap, unsorted, null-key                  ..... one key = N values
-  - ConcurrentHashMap, no-null-key, trade-safe   ..... one key = N values !
+  - HashMap, unsorted, null-key                  ..... 
+  - ConcurrentHashMap, no-null-key, trade-safe   .....
   - TreeMap,sorted (natural order)
     detail: always compareTo last node, then if greater puts right, otherwise left side.
 
