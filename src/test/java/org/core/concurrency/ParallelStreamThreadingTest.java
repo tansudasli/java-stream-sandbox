@@ -23,32 +23,38 @@ public class ParallelStreamThreadingTest {
     }
 
     /* Understanding thread allocations of Java-Streams
+
      - if it is not parallel, same thread, sequential (beginning2end), gets a person then completes all-intermediate-steps.
        And, repeats the same as person and other tasks
 
-       collect::new runs 1 times  (some kind of optimizations, so no need for combiner !!)
+        1 thread
 
-       !! no need combiner (never enters addAll step)
+            1 time  (so no need for combiner)  !! no need combiner (never enters addAll step)
+               collect:::new
 
-       person 1 map -> collect::add
-       person 2 map -> collect::add
+            N times
+                      sequentially
+               map:::      ->      collect:::add
 
+            N times, last step. terminal ops. sequential
+               forEach:::
 
-       @last step, foreach steps (terminal operation), sequential
+     - If it is parallel, leverages multi-threads, and all intermediate-steps can be happened in any order!.
+     So, combiner is must!.
 
-     - If it is parallel, leverages multi threads, and all intermediate-steps can be happened in any order!.
+       N thread
+           N times
+               collect::new (no optimization, which is interesting, that's why we need combiner!) -> collect::map
+               -> collect::new  -> collect::new  -> collect::map
+               -> collect::add ......... -> collect::addAll
+               -> collect::new ......
 
-       collect::new (no optimization, which is interesting, so we need combiner!) -> collect::map
-       -> collect::new  -> collect::new  -> collect::map
-       -> collect::add ......... -> collect::addAll
-       -> collect::new ......
-
-       @last step, foreach steps  (terminal operation), sequential
+       1 Thread
+            @last step, foreach steps,  (terminal operation), sequential
 
      */
     Consumer<List<Person>> emailsZ =
-            (people) -> people.stream()
-                    .parallel()
+            (people) -> people.parallelStream()
                     .map(person -> {
                         //Todo: make it async :) What happens
                         System.out.println("map::: ".concat(Thread.currentThread().getName())
