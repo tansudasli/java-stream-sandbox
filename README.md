@@ -132,8 +132,10 @@ Performances
            -> collect::add ......... -> collect::addAll
            -> collect::new ......
 
-   1 Thread
-        @last step, foreach steps,  (terminal operation), sequential
+   N Thread
+        -> colect returns ArrayList<>, so we need .parallelStream() again. 
+        Otherwise, it is not multi-threaded. 
+        @last step, foreach steps,  (terminal operation)
    ```
 
 </details>
