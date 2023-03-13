@@ -36,7 +36,9 @@ public class ParallelStreamThreadingTest {
                       sequentially
                map:::      ->      collect:::add
 
-            N times, last step. terminal ops. sequential
+            N times,
+              - last step. terminal ops. sequential , because of  Collect returns ArrayList<> !!!!
+              - If we put .parallelStream() before, then forEach will be multi-thread, too.
                forEach:::
 
      - If it is parallel, leverages multi-threads, and all intermediate-steps can be happened in any order!.
@@ -84,6 +86,7 @@ public class ParallelStreamThreadingTest {
                                 list1.addAll(list2);
                             }
                     )
+                    .parallelStream()     //that line makes forEach multi-thread !
                     .forEach(email -> {
                                 System.out.println("forEach::: ".concat(Thread.currentThread().getName())
                                                                 .concat("::: " + email));
