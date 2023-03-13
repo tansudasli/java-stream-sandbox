@@ -1,4 +1,4 @@
-package org.core;
+package org.core.collections;
 
 public class QueueTest {
 

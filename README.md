@@ -2,21 +2,35 @@
 
 This project is about 
 
+- Collections API
 - Stream API
-- parallelStreams
 - Collectors API
-- Optional
-- Functional interfaces 
+- Functional API 
+- parallelStreams
 
 ## Stream concepts
 
+<details>
+<summary>Collections API ::: General combinations</summary>
+
+- not every combination makes sense 
+- some combinations are abstract, so you must implement
+
+```
+    Concurrent | Array   | List
+                 Linked  | Map
+                 Hash    | Set
+                 Tree    | Queue
+                         | Table
+```
+
+</details>
 <details>
 <summary>Get a stream from Regex</summary>
 
 - `Stream<String>  xx =  Pattern.compile("\\w+).matcher("source").results()`
 
 </details>
-
 <details>
 <summary> Get a stream from File</summary>
 
@@ -24,7 +38,6 @@ This project is about
 - `Stream<String> xx =  Files.lines(Paths.get(PATH))`
 
 </details>
-
 <details>
 <summary> Get a stream from int[] ::: primitives (Arrays.stream)</summary>
 
@@ -32,7 +45,6 @@ This project is about
 - then `.boxed` to get `Stream<Integer>`, if you need!
 
 </details>
-
 <details>
 <summary> Get a stream from Collections ::: wrappers (.stream)</summary>
 
@@ -41,7 +53,6 @@ This project is about
 
 
 </details>
-
 <details>
 <summary>Threading ::: in java-streams</summary>
 
@@ -63,7 +74,6 @@ This project is about
     ```
 
 </details>
-
 <details>
 <summary>Threading ::: in java-parallelStreams</summary>
 
@@ -83,9 +93,8 @@ This project is about
    ```
 
 </details>
-
 <details>
-<summary>Methods ::: stream API vs Collectors API </summary>
+<summary>Methods ::: Stream API vs Collectors API </summary>
 
 some critical things changes the methods we may see!
 - min vs Collectors.minBy

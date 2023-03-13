@@ -1,5 +1,7 @@
-package org.core;
+package org.core.collections;
 
+import org.core.IPeopleGeneratorService;
+import org.core.Person;
 import org.junit.jupiter.api.Test;
 
 import java.util.Set;
@@ -21,6 +23,7 @@ public class SetTest {
 
     @Test
     void testPeopleCount() {
+        System.out.println("people count: ".concat(String.valueOf(data.size())));
 
         assertEquals(SIZE, data.size());
     }
