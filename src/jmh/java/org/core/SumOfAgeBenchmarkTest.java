@@ -77,6 +77,6 @@ public class SumOfAgeBenchmarkTest {
 
     //people size = 8k
 //    Benchmark                           Mode  Cnt      Score   Error  Units
-//    SumOfAgeBenchmarkTest.inParallel    avgt        6324.333          us/op
-//    SumOfAgeBenchmarkTest.inSequential  avgt       52963.479          us/op
+//    SumOfAgeBenchmarkTest.inParallel    avgt        1308.693          us/op
+//    SumOfAgeBenchmarkTest.inSequential  avgt       44357.695          us/op
 }
