@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -15,35 +14,42 @@ public class MapTest {
     /* general combinations
 
 
-    Concurrent | Array   | List
-                 Linked  | Map
-                 Hash    | Set
-                 Tree    | Queue
-                         | Table
+    Concurrent | Linked | Array   | List
+                          Hash    | Map
+                          Tree    | Set
+                                  | Queue
+                                  | Table
      */
 
 
     /*default: initial bucket = 16, load factor 0.75
                if (size = lf * initial) -> resize *= 2
 
-      - Map<k, v>.entrySet().stream() ..... one key = one value
-      - HashMap,                      ..... one key = N values !
+               use .entrySet().stream() for streaming
+
+      - Map<k, v>, unsorted, no-null-key,            ..... one key = one value
+      - HashMap, unsorted, null-key                  ..... one key = N values
+      - ConcurrentHashMap, no-null-key, trade-safe   ..... one key = N values !
+      - TreeMap,sorted (natural order)
+        detail: always compareTo last node, then if greater puts right, otherwise left side.
+
+     */
+
+    /* HashMap in detail
 
       buckets
-        0
-        1  |        Node              |
-        2  | key|value|hash(key)|next | ....LinkedList<value> .....
-        3
+        0  |   null-key is ok, reserved for null    |
+        1
+        2
+        3  |        Node              |   NodeN
+        4  | key|value|hash(key)|next | ....LinkedList<value> .....
+        5
         .
         .
         15
         if key==null, bucket will be 0!
 
-        bucket index => hash(key) & (length-1)
-
-      - ConcurrentHashMap, no-null, trade-safe ..... one key = N values !
-      - TreeMap
-
+        bucket index => hash(key) & (size-1)
      */
     Map<Integer, Person> data = IPeopleGeneratorService.of.get()
                                            .stream().distinct()

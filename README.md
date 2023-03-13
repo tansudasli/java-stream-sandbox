@@ -25,6 +25,25 @@ This project is about
 ```
 
 </details>
+
+<details>
+<summary>Collections API ::: Map</summary>
+
+- default initial bucket = 16, load factor 0.75
+- if (size = lf * initial) -> resize *= 2
+- use .entrySet().stream() for streaming
+
+```
+
+  - Map<k, v>, unsorted, no-null-key,            ..... one key = one value
+  - HashMap, unsorted, null-key                  ..... one key = N values
+  - ConcurrentHashMap, no-null-key, trade-safe   ..... one key = N values !
+  - TreeMap,sorted (natural order)
+    detail: always compareTo last node, then if greater puts right, otherwise left side.
+
+```
+</details>
+
 <details>
 <summary>Get a stream from Regex</summary>
 
