@@ -15,11 +15,11 @@ public class MapTest {
     /* general combinations
 
 
-    Concurrent | Linked | Array   | List
-                          Hash    | Map
-                          Tree    | Set
-                                  | Queue
-                                  | Table
+    Concurrent | Linked     | Array   | List
+                 Navigable    Hash    | Map
+                              Tree    | Set
+                                      | Queue
+                                      | Table
      */
 
 
@@ -30,9 +30,9 @@ public class MapTest {
 
      Map means, one key = one value, But if you put a List<V>, you can hold many values for one key!
 
-      - Map<k, v>, unsorted, no-null-key,no-duplicate-key            ..... one key = one value
-      - HashMap, unsorted, null-key, no-duplicate-key                ..... one key = N values if List<V>
-      - ConcurrentHashMap, no-null-key, trade-safe                   ..... one key = N values !
+      - Map<k, v>, unsorted, no-null-key, no-duplicate-key           ..... one key = one value
+      - HashMap, unsorted, null-key, no-duplicate-key                .....
+      - ConcurrentHashMap, no-null-key, trade-safe                   .....
       - TreeMap,sorted (natural order)
         detail: always compareTo last node, then if greater puts right, otherwise left side.
 

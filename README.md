@@ -17,11 +17,11 @@ This project is about
 - some combinations are abstract, so you must implement
 
 ```
-    Concurrent | Array   | List
-                 Linked  | Map
-                 Hash    | Set
-                 Tree    | Queue
-                         | Table
+    Concurrent | Linked     | Array   | List
+                 Navigable    Hash    | Map
+                              Tree    | Set
+                                      | Queue
+                                      | Table
 ```
 
 </details>
@@ -36,9 +36,9 @@ This project is about
 
 ```
 
-  - Map<k, v>, unsorted, no-null-key,            ..... one key = one value
-  - HashMap, unsorted, null-key                  ..... 
-  - ConcurrentHashMap, no-null-key, trade-safe   .....
+  - Map<k, v>, unsorted, no-null-key, no-duplicate-key           ..... one key = one value
+  - HashMap, unsorted, null-key, no-duplicate-key                ..... 
+  - ConcurrentHashMap, no-null-key, trade-safe                   ..... 
   - TreeMap,sorted (natural order)
     detail: always compareTo last node, then if greater puts right, otherwise left side.
 
