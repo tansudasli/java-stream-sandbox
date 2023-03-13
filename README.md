@@ -17,11 +17,26 @@ This project is about
 - some combinations are abstract, so you must implement
 
 ```
-    Concurrent | Linked     | Array   | List
-                 Navigable    Hash    | Map
-                              Tree    | Set
-                                      | Queue
-                                      | Table
+    Concurrent | Linked     |  Array   | List
+                 Navigable  |  Hash    | Map
+                 Priority   |  Tree    | Set
+                                       | Queue
+                                       | Table
+Basicaly the meanings                                     
+- concurrent = thread-safe
+- Array = index-based, better random access
+- Linked = doubly-linked nodes, order preserved
+- hash = hashed
+
+LinkedHashMap = order-oreserved + hashed into buckets + k,v based store
+                                       
+```
+```
+Performances
+             insert    delete    get
+- Array        O(n)      O(n)    O(1)  
+- Linked       O(1)      O(1)    O(n)
+- Map          O(1)      O(1)    O(1)    
 ```
 
 </details>
