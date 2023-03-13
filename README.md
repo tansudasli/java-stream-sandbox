@@ -33,14 +33,14 @@ This project is about
 - default initial bucket = 16, load factor 0.75
 - if (size = lf * initial) -> resize *= 2
 - use .entrySet().stream() for streaming
+- no duplicate key
 
 ```
-
-  - Map<k, v>, unsorted, no-null-key, no-duplicate-key           ..... one key = one value
-  - HashMap, unsorted, null-key, no-duplicate-key                ..... 
-  - ConcurrentHashMap, no-null-key, trade-safe                   ..... 
-  - TreeMap,sorted (natural order)
-    detail: always compareTo last node, then if greater puts right, otherwise left side.
+  - Map<k, v>, unsorted, no-null-key                  
+  - HashMap, unsorted, null-key,                      
+  - LinkedHashMap, insert-order, null-key             
+  - ConcurrentHashMap, no-null-key, trade-safe        
+  - TreeMap, sorted natural-order or Comparator-based 
 
 ```
 </details>

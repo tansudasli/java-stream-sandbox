@@ -4,9 +4,7 @@ import org.core.IPeopleGeneratorService;
 import org.core.Person;
 import org.junit.jupiter.api.Test;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -30,11 +28,12 @@ public class MapTest {
 
      Map means, one key = one value, But if you put a List<V>, you can hold many values for one key!
 
-      - Map<k, v>, unsorted, no-null-key, no-duplicate-key           ..... one key = one value
-      - HashMap, unsorted, null-key, no-duplicate-key                .....
-      - ConcurrentHashMap, no-null-key, trade-safe                   .....
-      - TreeMap,sorted (natural order)
-        detail: always compareTo last node, then if greater puts right, otherwise left side.
+      - Map<k, v>, unsorted, no-null-key
+      - HashMap, unsorted, null-key,
+      - LinkedHashMap, insert-order, null-key
+      - ConcurrentHashMap, no-null-key, trade-safe
+      - TreeMap, sorted natural-order or Comparator-based
+
 
      */
 
@@ -92,6 +91,8 @@ public class MapTest {
     //ConcurrentHashMap<age, List<Person>>
     ConcurrentHashMap<Integer, List<Person>> personGroupedByAgeConcurrent = new ConcurrentHashMap<>(personGroupedByAge);
     HashMap<Integer, List<Person>> personGroupedByAgeHashed = new HashMap<>(personGroupedByAge);
+    TreeMap<Integer, List<Person>> personGroupedByAgeTree = new TreeMap<>(personGroupedByAge); //natural-order by key
+    TreeMap<Integer, List<Person>> personGroupedByAgeTreeReverse = new TreeMap<>(Comparator.reverseOrder());
 
     @Test
     void personGroupedByAgeConcurrent() {
