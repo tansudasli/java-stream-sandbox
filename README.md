@@ -172,7 +172,5 @@ some critical things changes the methods we may see!
 
 </details>
 
-## how to run
 
-- `./gradlew clean build jar jmhJar`
  
